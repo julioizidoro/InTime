@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/pages/templates/default.xhtml">
+        <ui:define name="corpo">
+            <h:form id="consSubdepartamento">
+                <div id="centro2" >
+                    <p:growl id="growl2" showDetail="true" sticky="true" /><br></br>
+                    <legend class="titulo" style="margin-left: 45%;font-size: 30px">Consulta de Sub-Departamento</legend>
+
+                    <p:commandLink  title="Adicionar Sub-Departamento" styleClass="cadastro5" action="#{SubdepartamentoMB.novo()}" update="consSubdepartamento">  
+                        <img src="../../resources/img/adicionarI.png" style="margin-left: 71%" /> 
+                        <p:ajax event="dialogReturn" listener="#{SubdepartamentoMB.retornoDialogNovo}" process="@this" update="tabelaSubdepartamento"/>
+                    </p:commandLink>
+                    <p:dataTable id="tabelaSubdepartamento" var="consSubdepartamento" value="#{SubdepartamentoMB.listaSubdepartamento}" class="dataGridcadastro" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
+                                 scrollable="true" scrollHeight="380"    rowIndexVar="rowIx">
+                        <p:column headerText="Departamento"  styleClass="border">
+                            <h:outputText value="#{consSubdepartamento.departamento.nome}" />
+                        </p:column>
+
+                        <p:column headerText="Sub-Departamento" styleClass="border">
+                            <h:outputText value="#{consSubdepartamento.nome}" />
+                        </p:column>
+
+                        <p:column style="width:35px" styleClass="alinhaCentro">
+                            <p:commandLink  id="editar" title="Editar" action="#{SubdepartamentoMB.editar(consSubdepartamento)}" update="tabelaSubdepartamento">
+                                <img src="../../resources/img/editarI.png" width="25" height="25"/>
+                                 <p:ajax event="dialogReturn" listener="#{SubdepartamentoMB.retornoDialogNovo}" process="@this" update="tabelaSubdepartamento"/>
+                            </p:commandLink>
+                        </p:column>
+                        <p:column style="width:35px" styleClass="alinhaCentro">
+                            <p:commandLink id="desabilitar" title="Habilitar/Desabilitar"   action="#{SubdepartamentoMB.habilitarDesabilitar(rowIx)}" update="tabelaSubdepartamento" >
+                                <img src="#{SubdepartamentoMB.retornarImagemSituacao(consSubdepartamento)}"/>
+                            </p:commandLink>
+                        
+                        </p:column>
+                    </p:dataTable>
+                    <br></br>
+
+                    <br></br><br></br>
+
+                </div>
+
+            </h:form>     
+
+        </ui:define>
+    </ui:composition>
+</html>

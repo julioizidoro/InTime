@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/pages/templates/default.xhtml">
+        <ui:define name="corpo">
+             <h:form id="consTela">
+                <div id="centro2" ><br></br>
+                    <p:growl id="growl2" showDetail="true" sticky="true" />
+                    <legend class="titulo" style="font-size: 30px;margin-left: 45%">Consulta de Módulo</legend>
+                     <br></br>
+                      
+                     <p:commandLink  title="Adicionar Módulo" styleClass="cadastro5" action="#{moduloMB.novo()}" >
+                         <img src="../../resources/img/adicionarI.png"  style="margin-left: 71%"/>
+                         <p:ajax event="dialogReturn" listener="#{moduloMB.retornoDialogNovo}" process="@this" update=":consTela:tabelaModulo"/>
+                     </p:commandLink>  
+                     <p:contextMenu for="tabelaModulo" style="font-size: 12px">
+                         <p:menuitem value="Alterar"  icon=" ui-icon-pencil"  action="#{moduloMB.editar()}" />
+                    </p:contextMenu>
+                      <p:dataTable id="tabelaModulo" var="consModulo" value="#{moduloMB.listaModulos}" class="dataGridcadastro" 
+                                   scrollable="true" scrollHeight="300" selection="#{moduloMB.modulos}" selectionMode="single" rowKey="#{consModulo.idmodulos}" >
+                        <p:column headerText="Nome"  styleClass="border" >
+                            <h:outputText value="#{consModulo.nome}" />
+                        </p:column>
+
+                          <p:column headerText="Data Inicial" styleClass="border" style="width:73px">
+                            <h:outputText value="#{consModulo.datainicial}" >
+                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            </h:outputText>
+                        </p:column>
+                         <p:column headerText="Data Final" styleClass="border" style="width:73px">
+                             <h:outputText value="#{consModulo.datafinal}" >
+                                 <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                             </h:outputText>
+                        </p:column>
+                           <p:column headerText="Status" style="width:35px;" styleClass="alinhaCentro">
+                              <p:graphicImage value="#{moduloMB.imagemStatus(consModulo)}" />
+                        </p:column>
+                          <p:column style="width:40px;text-align: center;" styleClass="border">
+                             <p:commandLink  title="Atividades do Módulo" action="#{moduloMB.atividadesModulo(consModulo)}">
+                                <img src="../../resources/img/atividadeModulo.png" width="87%" height="87%"/>
+                            </p:commandLink>
+                          </p:column>
+                    </p:dataTable>
+                    <br></br>
+                    <p:commandLink title="Voltar" style="margin-left: 84.5%" action="#{moduloMB.voltar()}" >
+                        <img src="../../resources/img/voltarI.png"/>
+                    </p:commandLink>
+                    <br></br><br></br>
+                   
+                </div>
+                
+            </h:form>     
+
+        </ui:define>
+    </ui:composition>
+</html>

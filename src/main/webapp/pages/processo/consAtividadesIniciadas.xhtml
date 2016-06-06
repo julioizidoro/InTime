@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <h:body class="body2">
+        <h:form id="atividadeIniciadas" class="body2" style="font-size: 12px">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <img src="../../resources/img/ajax-loader.gif" />
+            </p:dialog>
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <title><p:outputLabel value="#{atividadesIniciadas.atividades.nome}"/></title>                                                                  
+            <br/><br/>
+            <p:dataTable id="tabelaAtividadesIniciadas" var="atividadesIniciadas" value="#{processoIniciadosAtividadesMB.listaAtividades}" class="dataGriddialog" editable="true" editMode="cell" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
+                         scrollable="true" scrollHeight="200"  rowIndexVar="rowIx" style="width: 93.5%;margin-left: 3.3%"  >
+
+                <p:column headerText="Atividades" style="width:170px;" styleClass="border">
+                    <h:outputText value="#{atividadesIniciadas.atividades.nome}" />
+                </p:column>                
+                <p:column headerText="Data de Abertura" style="width:100px;" styleClass="border">
+                    <h:outputText value="#{atividadesIniciadas.datexecucao}" >
+                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Data de Conclusão" style="width:100px;" styleClass="border">
+                    <h:outputText value="#{atividadesIniciadas.dataconclusao}" >
+                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Status" style="width:35px;" styleClass="alinhaCentro">
+                    <p:graphicImage value="#{processoIniciadosAtividadesMB.imagemStatus(atividadesIniciadas)}" />
+                </p:column>
+            </p:dataTable>
+            
+            <p:commandLink style="height:6%;margin-left: 90%" title="Cancelar"  action="#{processoIniciadosAtividadesMB.fechar()}" update="@all" ajax="true" >
+                <img src="../../resources/img/cancelarI.png"/>
+            </p:commandLink>
+
+        </h:form>
+    </h:body>
+
+</html>

@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <h:body class="body2">
+        <h:form id="telaRelatorioPorCliente" class="body2" style="font-size: 12px"> <br></br><br></br>
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <img src="resources/img/ajax-loader.gif" />
+            </p:dialog>
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <title>Relatório</title>
+            <p:selectOneMenu value="#{relatorioMB.idCliente}" style="width:26%;margin-left:5%" class="espaco2">
+                <f:selectItem itemLabel="Cliente" itemValue="0"   />
+                <f:selectItems value="#{relatorioMB.listaCliente}" var="clienteSelecionado" itemLabel="#{clienteSelecionado.nomefantasia}" itemValue="#{clienteSelecionado.idcliente}"/>
+            </p:selectOneMenu>
+            <p:inputMask mask="99/99/9999" value="#{relatorioMB.dataInicial}" style="margin-left:5%;width: 12%" placeholder="Data Inícial"/>
+            <p:inputMask mask="99/99/9999" value="#{relatorioMB.dataFinal}" style="margin-left:5%;width: 12%" placeholder="Data Final"/>
+            
+            
+            <p:inputMask mask="99/99/9999" value="#{relatorioMB.dataFinal}" style="margin-left:5%;width:15%" placeholder="Data Conclusão"/>
+            <br></br><br></br><br></br>
+            <p:selectOneMenu id="departamento" value="#{relatorioMB.idDepartamento}" style="width:35%;margin-left:5%">
+                <f:selectItem itemLabel="Departamento" itemValue="0"   />
+                <f:selectItems value="#{relatorioMB.listaDepartamento}" var="departamento" itemLabel="#{departamento.nome}" itemValue="#{departamento.iddepartamento}"/>
+            </p:selectOneMenu>
+            <p:commandButton icon=" ui-icon-check" value="Confirmar" style="margin-left:18%" class="cadastro4" action="#"/>  
+             <p:commandButton icon=" ui-icon-close " value="Cancelar" style="margin-left:2%" class="cancelar" action="#"/> 
+             <br></br><br></br><br></br><br></br>
+             
+        </h:form>
+    </h:body>
+
+</html>

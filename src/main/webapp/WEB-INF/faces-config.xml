@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+    version="2.2">
+    
+    <navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>index</from-outcome>
+			<to-view-id>index.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>inicial</from-outcome>
+			<to-view-id>/pages/tarefas/inicial.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consDepartamento</from-outcome>
+			<to-view-id>/pages/departamento/consDepartamento.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>informacoes</from-outcome>
+			<to-view-id>/pages/informacao/informacoes.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consSubdepartamento</from-outcome>
+			<to-view-id>/pages/subdepartamento/consSubdepartamento.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consRotina</from-outcome>
+			<to-view-id>/pages/rotina/consRotina.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consUsuario</from-outcome>
+			<to-view-id>/pages/usuario/consUsuario.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consPerfil</from-outcome>
+			<to-view-id>/pages/perfil/consPerfil.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consProcessos</from-outcome>
+			<to-view-id>/pages/processo/consProcesso.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consProjeto</from-outcome>
+			<to-view-id>/pages/projeto/consProjeto.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>consCliente</from-outcome>
+			<to-view-id>/pages/cliente/consCliente.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>relatorioPorCliente</from-outcome>
+			<to-view-id>/pages/relatorios/relatorioPorCliente.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>relatorioAtividadesConcluidas</from-outcome>
+			<to-view-id>/pages/relatorios/relatorioAtividadesConcluidas.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+	</navigation-rule>
+	
+	<application>
+        <action-listener>
+            org.primefaces.application.DialogActionListener
+        </action-listener>
+        <navigation-handler>
+            org.primefaces.application.DialogNavigationHandler
+        </navigation-handler>
+        <view-handler>
+            org.primefaces.application.DialogViewHandler
+        </view-handler>
+    </application>
+
+</faces-config>

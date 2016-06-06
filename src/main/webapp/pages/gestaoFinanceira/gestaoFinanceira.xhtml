@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/pages/templates/default.xhtml">
+        <ui:define name="corpo">
+            <h:form>
+                <div id="centro2" >
+                     <br></br>
+                     <br></br>
+                      <legend class="titulo">Gestão Financeira</legend>
+                     <br></br> 
+                            <h:panelGrid columns="3" cellpadding="3">
+                                <p:outputLabel value="Data Entrega Relatório" for="dataEntregaRelatorio"  class="left1" /> 
+                            </h:panelGrid>
+                            <h:panelGrid columns="3" cellpadding="5">
+                                <p:calendar id="dataEntregaRelatorio"  pattern="dd/MM/yyyy" mask="true" size="12" maxlength="14" class="left1"  value="">
+                                     <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                </p:calendar>
+                            </h:panelGrid>
+                     <legend class="subtitulo">Dados do Relatório</legend>
+                            <h:panelGrid columns="3" cellpadding="3">
+                                <p:outputLabel value="Plano de Conta" for="planoConta1"  class="left1" /> 
+                                <p:outputLabel value="Descrição" for="descricao"  class="filtrar2" /> 
+                                <p:outputLabel value="Observação" for="observacao"  class="left2" /> 
+                            </h:panelGrid>
+                            <h:panelGrid columns="3" cellpadding="5">
+                                <p:inputText id="planoConta1"   size="25" maxlength="100" class="left1"  value="#"/>
+                                <p:inputText id="descricao"   size="38" maxlength="100" class="filtrar"  value="#" />
+                                <p:inputText id="observacao"   size="35" maxlength="100" class="filtrar"  value="#" />
+                            </h:panelGrid>
+                          <h:panelGrid columns="3" cellpadding="3">
+                                <p:outputLabel value="Plano de Conta" for="planoConta2"  class="left3" /> 
+                                <p:outputLabel value="Descrição" for="descricao2"  class="filtrar2" /> 
+                                <p:outputLabel value="Observação" for="observacao2"  class="left2" /> 
+                            </h:panelGrid>
+                            <h:panelGrid columns="3" cellpadding="5">
+                                <p:inputText id="planoConta2"   size="25" maxlength="100" class="left3"  value="#"/>
+                                <p:inputText id="descricao2"   size="38" maxlength="100" class="filtrar"  value="#" />
+                                <p:inputText id="observacao2"   size="35" maxlength="100" class="filtrar"  value="#" />
+                            </h:panelGrid>
+                        <h:panelGrid columns="3" cellpadding="3">
+                                <p:outputLabel value="Plano de Conta" for="planoConta3"  class="left3" /> 
+                                <p:outputLabel value="Descrição" for="descricao3"  class="filtrar2" /> 
+                                <p:outputLabel value="Observação" for="observacao3"  class="left2" /> 
+                            </h:panelGrid>
+                            <h:panelGrid columns="3" cellpadding="5">
+                                <p:inputText id="planoConta3"   size="25" maxlength="100" class="left3"  value="#"/>
+                                <p:inputText id="descricao3"   size="38" maxlength="100" class="filtrar"  value="#" />
+                                <p:inputText id="observacao3"   size="35" maxlength="100" class="filtrar"  value="#" />
+                            </h:panelGrid>
+                            <h:panelGrid columns="3" cellpadding="3">
+                                <p:outputLabel value="Plano de Conta" for="planoConta4"  class="left3" /> 
+                                <p:outputLabel value="Descrição" for="descricao4"  class="filtrar2" /> 
+                                <p:outputLabel value="Observação" for="observacao4"  class="left2" /> 
+                            </h:panelGrid>
+                            <h:panelGrid columns="3" cellpadding="5">
+                                <p:inputText id="planoConta4"   size="25" maxlength="100" class="left3"  value="#"/>
+                                <p:inputText id="descricao4"   size="38" maxlength="100" class="filtrar"  value="#" />
+                                <p:inputText id="observacao4"   size="35" maxlength="100" class="filtrar"  value="#" />
+                            </h:panelGrid>
+                             
+                            <h:panelGrid columns="3" cellpadding="3">
+                                <p:outputLabel value="Plano de Conta" for="planoConta6"  class="left3" /> 
+                                <p:outputLabel value="Descrição" for="descricao6"  class="filtrar2" /> 
+                                <p:outputLabel value="Observação" for="observacao6"  class="left2" /> 
+                            </h:panelGrid>
+                            <h:panelGrid columns="3" cellpadding="5">
+                                <p:inputText id="planoConta6"   size="25" maxlength="100" class="left3"  value="#"/>
+                                <p:inputText id="descricao6"   size="38" maxlength="100" class="filtrar"  value="#" />
+                                <p:inputText id="observacao6"   size="35" maxlength="100" class="filtrar"  value="#" />
+                            </h:panelGrid>
+                            <h:panelGrid columns="3" cellpadding="3">
+                                <p:outputLabel value="Plano de Conta" for="planoConta7"  class="left3" /> 
+                                <p:outputLabel value="Descrição" for="descricao7"  class="filtrar2" /> 
+                                <p:outputLabel value="Observação" for="observacao7"  class="left2" /> 
+                            </h:panelGrid>
+                            <h:panelGrid columns="3" cellpadding="5">
+                                <p:inputText id="planoConta7"   size="25" maxlength="100" class="left3"  value="#"/>
+                                <p:inputText id="descricao7"   size="38" maxlength="100" class="filtrar"  value="#" />
+                                <p:inputText id="observacao7"   size="35" maxlength="100" class="filtrar"  value="#" />
+                            </h:panelGrid>
+                     <br></br>
+                     <legend class="subtitulo">Dados Fluxo de Caixa</legend>
+                      <p:inputTextarea rows="3" cols="125" value="#" class="left3"/>    
+                      <br></br><br></br>
+                      <legend class="subtitulo">Outras Observações</legend>
+                      <p:inputTextarea rows="3" cols="125" value="#" class="left3"/> 
+                    <br></br>
+                     <br></br>
+                    <p:commandButton icon=" ui-icon-check" value="Cadastrar" class="cadastro"/>  
+                    <p:commandButton icon=" ui-icon-close " value="Cancelar" class="cancelar"/> 
+                </div>
+                
+            </h:form>     
+
+        </ui:define>
+    </ui:composition>
+</html>

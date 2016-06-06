@@ -1,0 +1,144 @@
+<h:form id="formMenu" xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html">
+     
+     <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+            <img src="../../resources/img/ajax-loader.gif" />
+        </p:dialog>
+   
+    <div id="tudo" style="background: #E0EEEE">
+        
+        <p:growl id="growl" showDetail="true" sticky="true" />
+
+        <p:menubar class="menu" id="redefinirmenu" style="margin-left:0%;width:99%;margin-top: -0.95%;font-size:100%">
+            <p:submenu label="Cadastros" class="submenu2" icon=" ui-icon-plus " style="margin-top:1%;margin-left:0%;font: bold">
+                <p:menuitem class="submenu" value="Cliente" action="#{MenuMB.cliente()}" update="growl"/>
+                <p:menuitem class="submenu" value="Departamento" action="#{MenuMB.departamento()}" update="growl"/>
+                <p:menuitem class="submenu" value="Sub-Departamento" action="#{MenuMB.subdepartamento()}" update="growl"/>
+                <p:menuitem class="submenu" value="Rotina" action="#{MenuMB.rotina()}" update="growl"/>
+                <p:menuitem class="submenu" value="Usuário" action="#{MenuMB.usuario()}" update="growl"/>
+                <p:menuitem class="submenu" value="Perfil" action="#{MenuMB.perfil()}" update="growl"/>
+                <p:menuitem class="submenu" value="Processos" action="#{MenuMB.processos()}" update="growl"/>
+                <p:menuitem class="submenu" value="Projeto" action="#{MenuMB.projeto()}" update="growl"/>
+            </p:submenu>
+            <p:submenu label="Relatórios" class="submenu2" icon=" ui-icon-plus " style="margin-top:1%;margin-left:0%">
+                <p:menuitem class="submenu" value="Relatório por Cliente" action="#{MenuMB.relatorioporcliente()}" update="growl"/>
+                <p:menuitem class="submenu" value="Relatório Atividades Concluídas" action="#{MenuMB.relatorioatividadesconcluidas()}" update="growl"/>
+            </p:submenu>
+
+            <p:menuitem  class="submenu2"   style="left:5%" >
+                <p:commandLink  style="margin-left:89.5%">
+                    <img src="../../resources/img/logoMenu.png" alt="" width="35" height="35"/>
+                </p:commandLink>
+            </p:menuitem>
+            <p:menuitem  class="submenu2" style="">
+                <p:commandLink style="margin-top:2%;margin-left: -22%" >
+                    <p:outputLabel value="InTime" style="font-family: 'Pacifico', cursive;color: #fff;font-size: 27px"/>
+                </p:commandLink>
+            </p:menuitem>
+
+            <p:menuitem  class="submenu2"  title="Adicionar Tarefa" >
+                <p:commandLink   action="#{AtividadeMB.novo()}" style="margin-left:74%;margin-top:0%" title="Adicionar Tarefa">
+                    <img src="../../resources/img/adicionarTarefa.png" width="42" height="42"/> 
+                    <p:ajax event="dialogReturn" update="@all"/>
+                </p:commandLink>
+            </p:menuitem>
+            <p:menuitem  class="submenu2"  title="Tarefa Particular" >
+                <p:commandLink action="#{AtividadeMB.novoParticular()}" style="margin-left: 10%;margin-top: 0%" title="Tarefa Particular">
+                    <img src="../../resources/img/adicionarTarefaParticular.png" width="42" height="42"/> 
+                    <p:ajax event="dialogReturn" update="@all"/>
+                </p:commandLink>
+            </p:menuitem>
+
+            <p:menuitem style="margin-top:4%;" title="Notificação"  >
+                <p:commandLink id="painelNotificacao" style="margin-left:13%;margin-top: 10% " title="Notificação"> 
+                    <img src="../../resources/img/notificacao.png" width="35" height="35"  /> 
+                </p:commandLink>
+
+            </p:menuitem>
+            <p:menuitem  style="margin-top:4%;" title="Notificação" >
+                <p:commandLink id="quantidadeNotificacao"  style="margin-left:-127%;margin-top:32%;width: 10%" title="Notificação" >
+                    <p:outputLabel   value="#{MenuMB.quantidade}" style="margin-left:0%;top:0%;font-size: 16px;"/>
+                    
+                </p:commandLink>
+            </p:menuitem>
+            
+            <p:menuitem style="margin-top:0%;" title="#{MenuMB.usuarioLogadoBean.usuario.nome}"  >
+                   <img src="../../resources/img/notificacao.png" width="35" height="35" style="margin-left:-40%;margin-top: 30%" /> 
+            </p:menuitem>
+            <p:menuitem  style="margin-top:0%;" title="#{MenuMB.usuarioLogadoBean.usuario.nome}" >
+                   <p:commandLink id="iniciais"  style="margin-left:-137%;margin-top:36%;width: 10%" title="#{MenuMB.usuarioLogadoBean.usuario.nome}">
+                       <p:outputLabel   value="#{MenuMB.usuarioLogadoBean.iniciais}" style="margin-left:0%;top:0%;font-size: 16px;"/>
+                </p:commandLink>
+              </p:menuitem>
+            
+            <p:menuitem  class="submenu2"  title="Sair" >
+                <p:commandLink style="margin-left:-50%;margin-top:-75%"  styleClass="fonteUsuarioLogado" action="#{usuarioLogadoMB.deslogar()}" title="Sair" > 
+                    <img src="../../resources/img/deslogar.png" width="35" height="35"/> 
+                </p:commandLink>            
+            </p:menuitem>
+        </p:menubar>
+
+        <h:panelGrid id="idpainelMenu" class="menu2" columns="2" style="background:#828282;color:#fff;font-family: 'Economica', sans-serif;">
+            <p:outputLabel value="Minhas Tarefas" style="text-decoration: none;color: #fff;font-size:21px;" class="fonteconomica"/><br></br>
+            <p:commandLink value="#{listaAtividadesMB.ndia}"  action="#{AtividadeMB.mostarAtividadesDia()}" class="#{AtividadeMB.corMenuSelecionadoDia}" style="text-decoration: none;color: #fff" update="@all" />
+            <br></br>
+            <p:commandLink value="#{listaAtividadesMB.nsemana}"  action="#{AtividadeMB.mostarAtividadesSemana()}" class="#{AtividadeMB.corMenuSelecionadoSemana}" style="text-decoration: none;color: #fff" update="@all" />
+            <br></br>
+            <p:commandLink value="#{listaAtividadesMB.natrasada}"  action="#{AtividadeMB.mostarAtividadesAtrasadas()}" class="#{AtividadeMB.corMenuSelecionadoAtrasada}" style="text-decoration: none;color: #fff" update="@all" />
+            <br></br>
+            <p:commandLink value="#{listaAtividadesMB.todas}"  action="#{AtividadeMB.mostarTodasAtividades()}" class="#{AtividadeMB.corMenuSelecionadoTodas}" style="text-decoration: none;color: #fff" update="@all" />
+            <br></br>
+            <p:commandLink id="menu_informacao" value="Informações"  action="#{MenuMB.informacao()}" class="fonteconomica" style="text-decoration: none;color: #fff"/>
+            <br></br><br></br>
+            <p:outputLabel value="Próximas 7 dias" class="fonteconomica" style="text-decoration: none;color: #fff;font-size:21px;"/>
+            <br></br>
+            <p:commandLink value="#{listaAtividadesMB.namanha}"  action="#{AtividadeMB.mostarAtividadesAmanha()}" class="#{AtividadeMB.corMenuSelecionadoAmanha}" style="text-decoration: none;color: #fff" update="@all" oncomplete="mudaCorCommandLink();" />
+            <br></br>
+            <p:commandLink value="#{listaAtividadesMB.dois}" action="#{AtividadeMB.mostarAtividadesDois()}" class="#{AtividadeMB.corMenuSelecionadoDois}" style="text-decoration: none;color: #fff" update="@all" oncomplete="mudaCorCommandLink();"/>
+            <br></br>
+            <p:commandLink value="#{listaAtividadesMB.tres}" action="#{AtividadeMB.mostarAtividadesTres()}" class="#{AtividadeMB.corMenuSelecionadoTres}" style="text-decoration: none;color: #fff" update="@all" oncomplete="mudaCorCommandLink();"/>
+           <br></br>
+           <p:commandLink value="#{listaAtividadesMB.quatro}" action="#{AtividadeMB.mostarAtividadesQuatro()}" class="#{AtividadeMB.corMenuSelecionadoQuatro}" style="text-decoration: none;color: #fff" update="@all" oncomplete="mudaCorCommandLink();"/>
+            <br></br>
+            <p:commandLink value="#{listaAtividadesMB.cinco}"  action="#{AtividadeMB.mostarAtividadesCinco()}" class="#{AtividadeMB.corMenuSelecionadoCinco}" style="text-decoration: none;color: #fff" update="@all" oncomplete="mudaCorCommandLink();" />
+            <br></br>
+            <p:commandLink value="#{listaAtividadesMB.seis}" action="#{AtividadeMB.mostarAtividadesSeis()}" class="#{AtividadeMB.corMenuSelecionadoSeis}" style="text-decoration: none;color: #fff" update="@all" oncomplete="mudaCorCommandLink();"/>
+            <br></br>
+            <p:commandLink value="#{listaAtividadesMB.sete}" action="#{AtividadeMB.mostarAtividadesSete()}" class="#{AtividadeMB.corMenuSelecionadoSete}" style="text-decoration: none;color: #fff" update="@all" oncomplete="mudaCorCommandLink();" />
+            <br></br><br></br>
+            <p:outputLabel value="Tarefas da Equipe" class="fonteconomica" style="text-decoration: none;color: #fff;font-size:21px;"/>
+            <br></br>   
+            <p:commandLink value="Atividades"  action="#{AtividadeMB.mostarAtividadesDepartamento()}"   class="#{AtividadeMB.corMenuSelecionadoDepartamento}" style="text-decoration: none;color: #fff" update="@all" oncomplete="mudaCorCommandLink();" />
+            <br></br>
+            <p:commandLink value="Situação" action="#{AtividadeMB.situacao()}"  style="text-decoration: none;color: #fff"  class="#{AtividadeMB.corMenuSituacao}"  update="@all" oncomplete="mudaCorCommandLink();"></p:commandLink>
+           
+        </h:panelGrid>
+
+        <p:overlayPanel  for="painelNotificacao" hideEffect="fade" dynamic="true"  style="width:25%;font-size: 12px">
+            <p:dataTable  id="listanotificacao" value="#{MenuMB.listaNotificacao}"  style="width: 100%;" var="notificacao" scrollable="true" scrollHeight="300" >
+                <p:column style=" border: none;"  >
+                    <p:commandLink title="Limpar"   update=":formMenu:quantidadeNotificacao, :formMenu:listanotificacao"  style="text-decoration: none" actionListener="#{MenuMB.concluirNotificacaoIndividual(notificacao)}" >
+                        <img src="../../resources/img/limparI.png"  width="70%" height="70%"/>
+                       
+                     </p:commandLink>  
+                </p:column>
+                <p:column style=" border: none;width:70%" >
+                    <h:outputText value="#{notificacao}"/>
+                </p:column>
+            </p:dataTable>
+            <br></br>
+            <p:commandLink title="Limpar  Todas" actionListener="#{MenuMB.concluirListaNotificacao()}"   update=":formMenu:quantidadeNotificacao, :formMenu:listanotificacao"  style="text-decoration: none;margin-left: 85%">
+                        <img src="../../resources/img/limparI.png"  />
+                        
+            </p:commandLink>
+        </p:overlayPanel>
+
+
+    </div>
+    <br>  </br>
+    <br>  </br>
+</h:form>

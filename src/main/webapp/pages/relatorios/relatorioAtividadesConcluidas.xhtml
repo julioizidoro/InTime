@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <h:body class="body2">
+        <h:form id="telaRelatorioPorCliente" class="body2" style="font-size: 12px"> <br></br><br></br>
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <img src="../../resources/img/ajax-loader.gif" />
+            </p:dialog>
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <title>Relatório</title>
+            <p:selectOneMenu id="iddepartamento" value="#{relatorioAtividadesConcluidasMB.departamento}" style="width:29%;margin-left:8%" 
+                             converter="departamentoConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                <f:selectItem itemLabel="Departamento" itemValue="0" noSelectionOption="true"/> 
+                <f:selectItems id="iddepartamentoescolhido" value="#{relatorioAtividadesConcluidasMB.listaDepartamento}" var="cdepartamento" itemLabel="#{cdepartamento.nome}" itemValue="#{cdepartamento}"/>
+                <f:attribute name="listaDepartamento" value="#{relatorioAtividadesConcluidasMB.listaDepartamento}"/>
+                <p:ajax event="change" update="subdepartamento"/> 
+            </p:selectOneMenu>
+            <p:selectOneMenu id="subdepartamento" value="#{relatorioAtividadesConcluidasMB.subdepartamento}"  style="width:33%;margin-left:6%"
+                                         converter="subDepartamentoConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                           <f:selectItem itemLabel="Sub-Departamento" itemValue="0"   />
+                           <f:selectItems value="#{relatorioAtividadesConcluidasMB.departamento.subdepartamentoList}" var="subdepartamentoSelecionado" itemLabel="#{subdepartamentoSelecionado.nome}" itemValue="#{subdepartamentoSelecionado}"/>
+                           <f:attribute name="listaSubDepartamento" value="#{relatorioAtividadesConcluidasMB.departamento.subdepartamentoList}"/>
+            </p:selectOneMenu>
+             <br></br><br></br><br></br>
+             <p:selectOneMenu value="#{relatorioAtividadesConcluidasMB.cliente}" style="width:29%;margin-left:8%" class="espaco2"
+                             converter="ClienteConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                <f:selectItem itemLabel="Cliente" itemValue="0"   />
+                <f:selectItems value="#{relatorioAtividadesConcluidasMB.listaCliente}" var="clienteSelecionado" itemLabel="#{clienteSelecionado.nomefantasia}" itemValue="#{clienteSelecionado}"/>
+                <f:attribute name="listaCliente" value="#{relatorioAtividadesConcluidasMB.listaCliente}"/>
+            </p:selectOneMenu>
+           
+            <p:selectOneMenu id="usuario" value="#{relatorioAtividadesConcluidasMB.usuario}"  style="width:33%;margin-left:6%"
+                             converter="usuarioConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                <f:selectItem itemLabel="Usuário" itemValue="0"   />
+                <f:selectItems value="#{relatorioAtividadesConcluidasMB.listaUsuario}" var="usuarioselecionado" itemLabel="#{usuarioselecionado.nome}" itemValue="#{usuarioselecionado}"/>
+                <f:attribute name="listaUsuario" value="#{relatorioAtividadesConcluidasMB.listaUsuario}"/>
+            </p:selectOneMenu>
+            <br></br><br></br><br></br>
+            <p:inputMask mask="99/99/9999" placeholder="Data Inícial" value="#{relatorioAtividadesConcluidasMB.dataInicial}" style="margin-left:8%;width: 12%" title="Data Inícial">
+                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+            </p:inputMask>
+            <p:inputMask mask="99/99/9999" placeholder="Data Final" value="#{relatorioAtividadesConcluidasMB.dataFinal}" style="margin-left:5%;width: 12%" title="Data Final">
+                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+            </p:inputMask>
+            <p:commandButton icon=" ui-icon-check" value="Confirmar" style="margin-left:13.5%" class="cadastro4" action="#{relatorioAtividadesConcluidasMB.gerarRelatorioAtividadesConsluidas()}" ajax="false" onclick="this.form.target='_blank'"/>  
+            <p:commandButton icon=" ui-icon-close " value="Cancelar" style="margin-left:2%" class="cancelar" action="#{relatorioAtividadesConcluidasMB.cancelar()}"/> 
+              <br></br><br></br>
+        </h:form>
+    </h:body>
+
+</html>

@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/pages/templates/default.xhtml">
+        <ui:define name="corpo">
+            <h:form id="consperfil">
+                <div id="centro2" >
+                    <p:growl id="growl2" showDetail="true" sticky="true" /><br></br>
+                     <legend class="titulo" style="margin-left: 47%;font-size: 30px" >Consulta de Clientes</legend>
+                    <h:panelGrid columns="3">
+                        <p:inputText placeholder="Nome Fantasia" id="nome"  style="width:180%;margin-left:28%;font-size:12px" maxlength="100"  value="#{clienteMB.nomeCliente}" >
+                            <p:ajax event="change"/>
+                        </p:inputText>
+                        <p:commandLink action="#{clienteMB.pesquisarNome()}" title="Pesquisar" update="tabelaCliente" style="text-decoration: none;margin-left:632%">
+                            <img src="../../resources/img/pesquisarI.png"/>
+                        </p:commandLink> 
+
+                        <p:commandLink  title="Adicionar Cliente"  action="#{clienteMB.novo()}" update="consperfil:growl2" style="text-decoration: none;margin-left:38%">
+                            <img src="../../resources/img/adicionarI.png" style="margin-left:94%" /> 
+                        </p:commandLink> 
+                        <br></br>
+                    </h:panelGrid>
+                    <p:dataTable id="tabelaCliente" var="consCliente" value="#{clienteMB.listaClientes}" class="dataGrid"  scrollable="true" scrollHeight="400" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
+                                 rowIndexVar="rowIx">
+                        <p:column headerText="Nome Fantasia" style="width:80px;" styleClass="border">
+                            <h:outputText value="#{consCliente.nomefantasia}" />
+                        </p:column>
+
+                        <p:column headerText="Pessoa para Contato" style="width:120px;" styleClass="border">
+                            <h:outputText value="#{consCliente.contato}" />
+                        </p:column>
+
+                        <p:column headerText="E-mail" style="width:160px;" styleClass="border">
+                            <h:outputText value="#{consCliente.email}" />
+                        </p:column>
+
+                        <p:column headerText="Telefone" style="width:80px;" styleClass="border">
+                            <h:outputText value="#{consCliente.telefone}" />
+                        </p:column>
+                        <p:column style="width:26px" styleClass="alinhaCentro">
+                            <p:commandLink  id="editar" title="Editar" action="#{clienteMB.editar(consCliente)}" update="consperfil:growl2">
+                                <img src="../../resources/img/editarI.png" width="25" height="25"/>
+                            </p:commandLink>
+                        </p:column>   
+                        <p:column style="width:32px" headerText="Status" styleClass="alinhaCentro">
+                            <p:commandLink id="desabilitar" title="Habilitar/Desabilitar"  actionListener="#{clienteMB.pegarLinhaTabela(rowIx)}" action="#{clienteMB.habilitarDesabilitar()}" update="tabelaCliente" >
+                                <img src="#{clienteMB.retornarImagemSituacao(consCliente)}"/>
+                            </p:commandLink>
+                        </p:column>
+                    </p:dataTable>
+                    <br></br>
+                </div>
+
+            </h:form>     
+
+        </ui:define>
+    </ui:composition>
+</html>

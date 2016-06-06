@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/pages/templates/default.xhtml">
+        <ui:define name="corpo">
+            <h:form style="font-size: 12px;">
+                <div id="centro2" ><br></br><br></br>
+                    <legend class="subtitulo">Dados do Cliente</legend><br></br><br></br>
+                    <p:outputLabel value="Razão Social:" for="razaosocial"  style="margin-left: 7.5%" /> 
+                    <p:inputText id="razaosocial"  style="width:21%" maxlength="100" class="espaco1"  value="#{cadClienteMB.cliente.razaosocial}" />
+                    <p:outputLabel value="CNPJ:" for="cnpj"  class="espaco1" /> 
+                    <p:inputMask id="cnpj" style="width:9%" maxlength="100" class="espaco1" mask="99.999.999/9999-99" value="#{cadClienteMB.cliente.cnpj}"/>
+                    <p:outputLabel value="Telefone:" for="telefone"  class="espaco1" />
+                    <p:inputMask id="telefone" style="width:8%" maxlength="100" class="espaco1" mask="(99)9999-9999" value="#{cadClienteMB.cliente.telefone}"/>
+                     <p:outputLabel value="|" for="telefone2"  class="espaco1" /> 
+                    <p:inputMask id="telefone2" style="width:8%" maxlength="100" class="espaco1" mask="(99)9999-9999" value="#"/>
+                  <br></br><br></br>
+                  <p:outputLabel value="Nome Fantasia:" for="nomefantasia"  style="margin-left: 6.8%" /> 
+                    <p:inputText id="nomefantasia" style="width:11.5%" maxlength="100" class="espaco1"  value="#{cadClienteMB.cliente.nomefantasia}"/>
+                    <p:outputLabel value="Email:" for="email"  style="margin-left:2%" /> 
+                    <p:inputText id="email" style="width:15%" maxlength="100" class="espaco1"  value="#{cadClienteMB.cliente.email}" />
+                    <p:outputLabel value="Pessoa de Contato:" for="contato"  style="margin-left: 2%" /> 
+                    <p:inputText id="contato"  style="width:15.7%" maxlength="100" class="espaco1"  value="#{cadClienteMB.cliente.contato}" />
+                    
+                    <br></br><br></br> 
+                    <h:panelGrid columns="6">
+                    <p:outputLabel value="Tipo Logradouro:"  style="margin-left: 85px"/>
+                    <p:selectOneMenu id="tipologra" value="#{cadClienteMB.cliente.tipogradouro}" style="width:160px;margin-left: 10px" >
+                        <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
+                        <f:selectItem itemLabel="Rua" itemValue="Rua" />  
+                        <f:selectItem itemLabel="Alameda" itemValue="Alameda" />  
+                        <f:selectItem itemLabel="Avenida" itemValue="Avenida" />  
+                        <f:selectItem itemLabel="Largo" itemValue="Largo" />  
+                        <f:selectItem itemLabel="Praça" itemValue="Praça" />  
+                        <f:selectItem itemLabel="Quadra" itemValue="Quadra" /> 
+                        <f:selectItem itemLabel="Travessa" itemValue="Travessa" /> 
+                        <f:selectItem itemLabel="Viaduto" itemValue="Viaduto" /> 
+                        <f:selectItem itemLabel="Rodivia" itemValue="Rodivia" />  
+                        <f:selectItem itemLabel="Estrada" itemValue="Estrada" />  
+                        <f:selectItem itemLabel="Servidão" itemValue="Servidão" />  
+                        <f:selectItem itemLabel="BR" itemValue="BR" />       
+                    </p:selectOneMenu> 
+                    <p:outputLabel value="Logradouro:" for="logra" style="margin-left: 50px"/>
+                    <p:inputText id="logra"   style="width:225px;margin-left: 10px"  value="#{cadClienteMB.cliente.logradouro}"/>
+                    <p:outputLabel value="Número:" for="numero"  style="margin-left: 120px"/>
+                    <p:inputMask id="numero"   style="width:100px;margin-left: 10px"   value="#{cadClienteMB.cliente.numero}" mask="?999999999"/>
+                    </h:panelGrid>
+                    <br></br> 
+                    <p:outputLabel value="Complemento:" for="comple" style="margin-left: 7.5%"/>
+                    <p:inputText id="comple" style="width:27%" class="espaco1" value="#{cadClienteMB.cliente.complemento}"/>
+                    <p:outputLabel value="Bairro:" for="bairro" style="margin-left: 14%" />
+                    <p:inputText id="bairro" value="#{cadClienteMB.cliente.bairro}" style="width:15.5%" class="espaco1"/>
+                    
+                    <br></br><br></br> 
+                    <h:panelGrid columns="6">
+                    <p:outputLabel value="Cidade:" for="cidade" style="margin-left: 137px"/>
+                    <p:inputText id="cidade" value="#{cadClienteMB.cliente.cidade}"  style="width:155px;margin-left: 10px" /> 
+                    <p:outputLabel value="Estado:" style="margin-left: 74px"/>
+                    <p:selectOneMenu id="estado" value="#{cadClienteMB.cliente.estado}"  style="width:220px;margin-left: 10px">
+                        <f:selectItem itemLabel="Selecione o Estado" itemValue="sn" noSelectionOption="true"/> 
+                        <f:selectItem itemLabel="Acre" itemValue="AC" /> 
+                        <f:selectItem itemLabel="Alagoas" itemValue="AL" /> 
+                        <f:selectItem itemLabel="Amapá" itemValue="AP" />  
+                        <f:selectItem itemLabel="Amazonas" itemValue="AM" />  
+                        <f:selectItem itemLabel="Bahia" itemValue="BA" />  
+                        <f:selectItem itemLabel="Ceará" itemValue="CE" />  
+                        <f:selectItem itemLabel="Distrito Federal" itemValue="DF" />  
+                        <f:selectItem itemLabel="Espirito Santo" itemValue="ES" />  
+                        <f:selectItem itemLabel="Goiás" itemValue="GO" />  
+                        <f:selectItem itemLabel="Maranhão" itemValue="MA" />  
+                        <f:selectItem itemLabel="Mato Grosso" itemValue="MT" />  
+                        <f:selectItem itemLabel="Mato Grosso do Sul" itemValue="MS" />  
+                        <f:selectItem itemLabel="Minas Gerais" itemValue="MG" />  
+                        <f:selectItem itemLabel="Pará" itemValue="PA" />  
+                        <f:selectItem itemLabel="Paraíba" itemValue="PB" />  
+                        <f:selectItem itemLabel="Paraná" itemValue="PR" />  
+                        <f:selectItem itemLabel="Pernambuco" itemValue="PE" />  
+                        <f:selectItem itemLabel="Piauí" itemValue="PI" />  
+                        <f:selectItem itemLabel="Rio de Janeiro" itemValue="RJ" />  
+                        <f:selectItem itemLabel="Rio Grande do Norte" itemValue="RN" />  
+                        <f:selectItem itemLabel="Rio Grande do Sul" itemValue="RS" />  
+                        <f:selectItem itemLabel="Rondônia" itemValue="RO" />  
+                        <f:selectItem itemLabel="Roraima" itemValue="RR" />  
+                        <f:selectItem itemLabel="Santa Catarina" itemValue="SC" />  
+                        <f:selectItem itemLabel="São Paulo" itemValue="SP" />  
+                        <f:selectItem itemLabel="Sergipe" itemValue="SE" />  
+                        <f:selectItem itemLabel="Tocantins" itemValue="TO" /> 
+                    </p:selectOneMenu>
+                    <p:outputLabel value="CEP:" for="cep" style="margin-left: 150px"/>
+                    <p:inputMask id="cep" style="width:100px;margin-left: 10px"  maxlength="9"  value="#{cadClienteMB.cliente.cep}" mask="99999-999"/>     
+                   </h:panelGrid>
+                    <br></br> <br></br>  
+                  
+                    <legend class="subtitulo">Dados do Contrato</legend><br></br> <br></br> 
+                     <p:outputLabel value="Data 1º Contrato:" for="primeiroContrato" class="espaco6emeio"/>
+                     <p:calendar id="primeiroContrato"  pattern="dd/MM/yyyy" mask="true" size="12" maxlength="14" class="espaco2" value="#{cadClienteMB.cliente.datacontrato}">
+                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                    </p:calendar>
+                     <p:outputLabel value="Data Renovação:" for="dataRenovacao" class="espaco4"/>
+                    <p:calendar id="dataRenovacao"  pattern="dd/MM/yyyy" mask="true" size="12" maxlength="14" class="espaco2" value="#{cadClienteMB.cliente.datarenovacao}" >
+                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                    </p:calendar>
+                      <br></br> <br></br> <br></br> 
+                      <p:selectBooleanCheckbox value="#{cadClienteMB.cliente.contabilidade}"  class="espaco6emeio">
+                          <p:ajax update="contabilidadeH" listener="#{cadClienteMB.alterarComboBox()}"  />
+                    </p:selectBooleanCheckbox>
+                    <p:outputLabel value="Contabilidade" class="Selecionarconcluida"/>
+
+                    <p:selectBooleanCheckbox value="#{cadClienteMB.cliente.getaofinanceira}"  style="margin-left: 11%">
+                        <p:ajax update="financeiraH" listener="#{cadClienteMB.alterarComboBox()}" />
+                    </p:selectBooleanCheckbox>
+                    <p:outputLabel value="Financeiro" class="Selecionarconcluida"/>
+                    
+                    <p:selectBooleanCheckbox value="#{cadClienteMB.cliente.tercerizacao}"  style="margin-left: 12.5%">
+                        <p:ajax update="tercerizacaoH" listener="#{cadClienteMB.alterarComboBox()}" />
+                    </p:selectBooleanCheckbox>
+                    <p:outputLabel value="Tercerização" class="Selecionarconcluida"/>
+                    
+                    <p:selectBooleanCheckbox value="#{cadClienteMB.cliente.outros}"  style="margin-left: 12%">
+                        <p:ajax update="outrosH" listener="#{cadClienteMB.alterarComboBox()}" />
+                    </p:selectBooleanCheckbox>
+                    <p:outputLabel value="Outros" class="Selecionarconcluida"/>
+                    
+                    <h:panelGrid id="painelCombo" columns="6" cellpadding="5">   
+                        <p:inputText id="contabilidadeH"  size="22" style="margin-left: 58.5%;text-align: right" value="#{cadClienteMB.cliente.valorcontabilidade}"  readonly="#{cadClienteMB.contabilidade}" immediate="true" >
+                            <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
+                        </p:inputText>
+                        <p:inputText id="financeiraH" value="#{cadClienteMB.cliente.valorgestaofinanceira}"  size="22" style="margin-left: 22%;text-align: right" readonly="#{cadClienteMB.gestaofinanceira}" immediate="true">
+                                     <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
+                        </p:inputText>
+                        <p:inputText id="tercerizacaoH" value="#{cadClienteMB.cliente.valortercerizacao}"  size="22" style="margin-left: 22%;text-align: right" readonly="#{cadClienteMB.tercerizacao}" immediate="true" >
+                            <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
+                        </p:inputText>
+                        <p:inputText id="outrosH" value="#{cadClienteMB.cliente.valoroutros}"  size="22" style="margin-left: 22%;text-align: right" readonly="#{cadClienteMB.outros}" immediate="true" >
+                            <f:convertNumber pattern="##,###,###,###.##" minFractionDigits="2" />
+                        </p:inputText>
+                    </h:panelGrid> 
+                    <br></br>
+                    <p:commandLink  title="Confirmar" class="cadastro" action="#{cadClienteMB.salvar()}" style="margin-left:80%;text-decoration: none">
+                        <img src="../../resources/img/confirmarI.png"/>
+                    </p:commandLink> 
+                    <p:commandLink  title="Cancelar" class="cadastro" action="#{MenuMB.cliente()}" style="margin-left:2%;text-decoration: none">
+                        <img src="../../resources/img/cancelarI.png"/>
+                    </p:commandLink> 
+                     
+                    <br></br>
+                    <br></br>
+                </div>
+
+            </h:form>     
+
+        </ui:define>
+    </ui:composition>
+</html>

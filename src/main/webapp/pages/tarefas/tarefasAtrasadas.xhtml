@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/pages/templates/default.xhtml">
+        <ui:define name="corpo">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+            <img src="../../resources/img/ajax-loader.gif" />
+        </p:dialog>
+            <h:form id="atividades">
+                <div id="centro2" >
+                    <p:growl id="growl" showDetail="true" sticky="true" /><br></br>
+                    <legend ><p:outputLabel value="#{AtividadeMB.titulo}" class="titulo" style="font-size:30px;margin-left:35%"/></legend>
+                   <br></br>
+                   <p:contextMenu for="tabelaAtividades">
+                        <p:menuitem value="Encaminhar"  icon="ui-icon-arrowreturnthick-1-e"  action="#" />
+                        <p:menuitem value="Excluir"  icon="ui-icon-trash" action="#{AtividadeMB.excluirAtrasadas()}"   update="@all"/>
+                    </p:contextMenu><br></br><br></br>
+                    <p:dataTable id="tabelaAtividades" var="tarefas" value="#{AtividadeMB.listaAtividadesGeral}" class="dataGrid"  rowStyleClass="#{AtividadeMB.atrasadas(tarefas)  eq 'atrasado' ? 'letraPreta' : null}" 
+                                 editable="true" editMode="cell" rowIndexVar="rowIx" 
+                                 selection="#{AtividadeMB.atividades}" selectionMode="single" rowKey="#{tarefas.idatividades}">
+                        
+                       <p:ajax event="cellEdit"  listener="#{AtividadeMB.salvarAtividadeEditar(tarefas)}" update="@all" />/
+                       
+                        <p:column headerText="" style="width:4%;" styleClass="alinhaCentro">
+                         <p:commandLink disabled="#{tarefas.situacao}" actionListener="#{AtividadeMB.iniciarAtividade(rowIx)}" update="@all" oncomplete="popAprovar.hide(); #{meuBean.objetos}" title="#{AtividadeMB.mostrarTempo(tarefas)}">
+                                <img src="#{AtividadeMB.carregarIcon(tarefas)}" width="31" height="31"/>
+                            </p:commandLink>
+                        </p:column>
+                        <p:column headerText="" style="width:30%;" styleClass="border" sortBy="#{tarefas.nome}">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{tarefas.nome}" /></f:facet>
+                                <f:facet name="input"><p:inputText id="titulo" value="#{tarefas.nome}" style="width:100%"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                       <p:column headerText="" style="width:11%;" styleClass="border" sortBy="#{tarefas.subdepartamento.departamento.nome}">
+                           <p:cellEditor>
+                                <f:facet name="output"> <h:outputText value="#{tarefas.subdepartamento.nome}" />
+                                 <p:selectOneMenu id="subdepartamento" value="#{tarefas.subdepartamento}" style="width:100%" converter="subDepartamentoConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                                        <f:selectItems value="#{tarefas.subdepartamento.departamento.subdepartamentoList}" var="subdepartamentoSelecionado" itemLabel="#{subdepartamentoSelecionado.nome}" itemValue="#{subdepartamentoSelecionado}"/>
+                                        <f:attribute name="listaSubDepartamento" value="#{tarefas.subdepartamento.departamento.subdepartamentoList}"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                           </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="" style="width:5%;" styleClass="alinhaCentro">
+                            <p:commandButton icon="ui-icon-comment" action="#{AtividadeMB.verComentarios(rowIx)}"  update=":atividades:dialog_addComentario" oncomplete="PF('vercomentario').show()" value="#{AtividadeMB.quantidadeComentario(tarefas)}" style="background:transparent;border:2px #26C7EC;color:#585858;margin-left: -12%;-webkit-border-radius: 3;-moz-border-radius: 3;border-radius: 3px;border: solid #26C7EC 2px;">
+
+                            </p:commandButton>
+                        </p:column>
+
+                        <p:column headerText="" style="width:12%;" styleClass="border" sortBy="#{tarefas.cliente.nomefantasia}">
+                           <p:cellEditor>
+                               <f:facet name="output"> <h:outputText value="#{tarefas.cliente.nomefantasia}" /></f:facet>
+                               <f:facet name="input">
+                                   <p:selectOneMenu value="#{tarefas.cliente}" style="width:100%" converter="ClienteConverter">
+                                        <f:selectItems value="#{listaAtividadesMB.listaCliente}" var="clienteSelecionado" itemLabel="#{clienteSelecionado.nomefantasia}" itemValue="#{clienteSelecionado}"/>
+                                        <f:attribute name="listaCliente" value="#{listaAtividadesMB.listaCliente}"/>
+                                     </p:selectOneMenu>
+                               </f:facet>
+                           </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="" style="width:10%;" styleClass="alinhaCentro" sortBy="#{tarefas.prazo}" >
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{tarefas.prazo}" >
+                                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                    </h:outputText>  
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:calendar id="prazo" size="20" style="margin-left:8%" value="#{tarefas.prazo}"  pattern="dd/MM/yyyy" mask="true"  maxlength="15" locale="pt"  >
+                                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                        <p:ajax event="dateSelect"  listener="#{AtividadeMB.salvarEditarAtividade(tarefas)}" update="@all"/>
+                                        <p:ajax event="change"/>
+                                    </p:calendar>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="" style="width:4%;" styleClass="alinhaCentro" sortBy="#{tarefas.prioridade}">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <p:graphicImage value="#{AtividadeMB.imagem(tarefas)}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:selectOneMenu id="prioridade" value="#{AtividadeMB.atividades.prioridade}" style="width:100%">
+                                        <f:selectItem itemLabel="Normal" itemValue="3-normal" />
+                                        <f:selectItem itemLabel="Alta" itemValue="2-alta" />
+                                        <f:selectItem itemLabel="Urgente" itemValue="1-urgente" />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column style="width:5%;" styleClass="alinhaCentro">
+                            <p:selectBooleanCheckbox value="#{tarefas.situacao}" >
+                                <p:ajax update="@all" oncomplete="popAprovar.hide(); #{meuBean.objetos}" listener="#{AtividadeMB.salvarAtividadeConcluida(rowIx)}" />
+                            </p:selectBooleanCheckbox>
+                        </p:column>
+                        <p:column style="width:5%;" styleClass="alinhaCentro">
+                            <p:commandLink  id="excluir" title="Excluir" action="#{AtividadeMB.excluirAtrasadas(tarefas)}" update="tabelaAtividades">
+                                <img src="../../resources/img/excluirI.png"  width="31" height="31"/>
+                            </p:commandLink>
+                        </p:column>
+                    </p:dataTable>
+                    <br></br>
+                    <p:dialog id="dialog_addComentario" header="Comentários"  widgetVar="vercomentario" resizable="false"  class="dialog" width="33%" height="60%">
+                        <br></br>
+                        <p:inputTextarea value="#{AtividadeMB.comentarios.comentario}" style="width:83%">
+                        </p:inputTextarea>
+                        <p:commandLink action="#{AtividadeMB.salvarComentario()}" update="@all"  oncomplete="popAprovar.hide(); #{meuBean.objetos}" title="Adicionar" style="margin-left:2%;text-decoration: none">
+                            <img src="resources/img/adicionarI.png" width="30" height="30"/>
+                        </p:commandLink>
+                        <br></br> <br></br>
+                        <p:carousel value="#{AtividadeMB.listaComentarios}" var="comentarios" itemStyleClass="carousel" style="width:30%;" numVisible="1" firstVisible="0">
+                             <br></br>  
+                            <h:outputText value="#{comentarios.data}" style="width: 15%" >
+                                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                </h:outputText>
+                                <h:outputText value="#{comentarios.hora}" style="width: 15%;margin-left: 2%"/>
+                                <h:outputText value="#{comentarios.usuario.nome}" style="margin-left:37%;text-align: right"/>
+                                  <br></br> <br></br>
+                                <h:outputText value="Comentário:" style="width:100%" />
+                                <h:outputText value="#{comentarios.comentario}" style="margin-left: 2%"/>
+                        </p:carousel>
+                        <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+                    </p:dialog>
+
+
+
+                </div>
+
+            </h:form>     
+
+        </ui:define>
+    </ui:composition>
+</html>

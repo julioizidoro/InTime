@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="intimePU" transaction-type="JTA">
+    <jta-data-source>java:/intimeDS</jta-data-source>
+    <class>br.com.financemate.model.Atividademodulo</class>
+    <class>br.com.financemate.model.Atividades</class>
+    <class>br.com.financemate.model.Cliente</class>
+    <class>br.com.financemate.model.Comentarios</class>
+    <class>br.com.financemate.model.Config</class>
+    <class>br.com.financemate.model.Departamento</class>
+    <class>br.com.financemate.model.Membros</class>
+    <class>br.com.financemate.model.Modulos</class>
+    <class>br.com.financemate.model.Notificacao</class>
+    <class>br.com.financemate.model.Participante</class>
+    <class>br.com.financemate.model.Perfil</class>
+    <class>br.com.financemate.model.Processo</class>
+    <class>br.com.financemate.model.Processoatividade</class>
+    <class>br.com.financemate.model.Processorotina</class>
+    <class>br.com.financemate.model.Processosituacao</class>
+    <class>br.com.financemate.model.Projeto</class>
+    <class>br.com.financemate.model.Raci</class>
+    <class>br.com.financemate.model.Rotina</class>
+    <class>br.com.financemate.model.Rotinaatividade</class>
+    <class>br.com.financemate.model.Rotinacliente</class>
+    <class>br.com.financemate.model.Subdepartamento</class>
+    <class>br.com.financemate.model.Usuario</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <shared-cache-mode>NONE</shared-cache-mode>
+    <validation-mode>NONE</validation-mode>
+    <properties/>
+  </persistence-unit>
+</persistence>

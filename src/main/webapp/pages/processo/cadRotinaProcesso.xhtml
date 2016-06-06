@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <h:head>
+      
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <h:body>
+        <h:form id="cadastrorotinaprocesso" style="font-size: 12px">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <img src="resources/img/ajax-loader.gif" />
+            </p:dialog>
+             
+            <title>Adicionar Atividade</title>
+            <br></br>
+            <div > 
+                 <p:growl id="growl" showDetail="true" sticky="true" />
+                <p:inputText placeholder="Descrição" value="#{cadProcessoRotinaMB.processorotina.descricao}" style="width:62.5%;margin-left: 7.2%"/>
+                <p:inputText placeholder="Dias uteis" value="#{cadProcessoRotinaMB.processorotina.diasuteis}" style="width:15%" class="espaco5"/>
+                 <br></br> <br></br>   
+                 <p:commandLink title="Confirmar"  action="#{cadProcessoRotinaMB.salvar()}" update="growl" ajax="true" style="text-decoration: none;margin-left: 78%">
+                     <img src="../../resources/img/confirmarI.png" />
+                 </p:commandLink>
+                 <p:commandLink title="Fechar"  class="espaco2" action="#{cadProcessoRotinaMB.fechar()}" update="@all" ajax="true" style="text-decoration: none">
+                     <img src="../../resources/img/cancelarI.png"/>
+                 </p:commandLink>
+            </div>
+        </h:form>
+    </h:body>
+
+</html>

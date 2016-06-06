@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/pages/templates/default.xhtml">
+        <ui:define name="corpo">
+            <h:form>
+                <div id="centro2" >
+                    <br></br>
+                    <legend class="titulo" style="margin-left: 47%;font-size: 30px">Cadastro de Perfil</legend>
+                    <br></br>  
+                            <h:panelGrid columns="6" cellpadding="5">   
+                                <p:inputText id="acesso" placeholder="Tipo de Acesso" style="width: 80%;margin-left: 59%" class="left1" value="#{PerfilMB.perfil.tipoacesso}"/>
+                            </h:panelGrid> 
+                           
+                            <br></br>
+                           <h:panelGrid columns="2" style="border:50px;margin-left: 28%" class="panelgrid" cellpadding="5" >
+                                <h:outputText value="Acessar Menu de Departamento" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.caddepartamento}" />
+                                <h:outputText value="Alterar Cadastro de Departamento" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.caddepartamentoeditar}" />
+                                <h:outputText value="Cadastrar Novo Departamento" class="fonte" />
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.caddepartamentoincluir}" />
+                           </h:panelGrid>
+                            <br></br>
+                            <h:panelGrid columns="2" style="border:50px;margin-left: 57%" class="panelgrid3" cellpadding="5">
+                                <h:outputText value="Acessar Menu de Perfil" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.cadperfil}" />
+                                <h:outputText value="Alterar Cadastro de Perfil" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.cadperfileditar}" />
+                                <h:outputText value="Cadastrar Novo Perfil" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.cadperfilincluir}" />
+                            </h:panelGrid>
+                            <br></br><br></br><br></br>
+                            <h:panelGrid columns="2" style="border:50px;margin-left: 28%" class="panelgrid" cellpadding="5" >
+                                <h:outputText value="Acessar Menu de Sub-Departamento" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.cadsubdepartamento}" />
+                                <h:outputText value="Alterar Cadastro de Sub-Departamento" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.cadsubdepartamentoeditar}" />
+                                <h:outputText value="Cadastrar Novo Sub-Departamento" class="fonte" />
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.cadsubdepartamentoincluir}" />
+                                <h:outputText value="Desativar/ativar Subdepartamento" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.cadsubdepartamentosituacao}" />
+                            </h:panelGrid>
+                            <br></br>
+                           <h:panelGrid columns="2" style="border:50px;margin-left: 57%" class="panelgrid4" cellpadding="5" >
+                                <h:outputText value="Acessar Menu de Rotina" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.cadrotina}" />
+                                <h:outputText value="Alterar Cadastro de Rotina" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.cadrotinaeditar}" />
+                                <h:outputText value="Excluir Rotina" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.cadrotinaexcluir}" />
+                                <h:outputText value="Cadastrar Nova Rotina" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.cadrotinaincluir}" />
+                           </h:panelGrid>    
+                              <br></br><br></br><br></br>
+                           <h:panelGrid columns="2" style="border:50px;margin-left: 28%" class="panelgrid" cellpadding="5" >    
+                                 <h:outputText value="Acessar Menu de Usuário" class="fonte"/>
+                                 <p:selectBooleanCheckbox value="#{PerfilMB.perfil.cadusuario}" />
+                                <h:outputText value="Alterar Cadastro de Usuário" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.cadusuarioeditar}" />
+                                <h:outputText value="Cadastrar Novo Usuário" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.cadusuarioincluir}" />
+                                <h:outputText value="Desativar/ativar Usuário" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.cadusuariosituacao}" />
+                           </h:panelGrid>     
+                            <br></br>
+                           <h:panelGrid columns="2" style="border:50px;margin-left: 57%" class="panelgrid4" cellpadding="5" >    
+                                <h:outputText value="Cadastrar Nova Tarefa" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.tarefasincluir}" />
+                                <h:outputText value="Alterar Cadastro de Tarefa" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.tarefaseditar}" />
+                                <h:outputText value="Iníciar Tempo de Tarefa" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.tarefatempo}" />
+                                <h:outputText value="Acessar Menu Tarefa de Equipe" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.tarefasoutros}" />
+                           </h:panelGrid>    
+                           <br></br><br></br><br></br>
+                            <h:panelGrid columns="2" style="border:50px;margin-left: 28%" class="panelgrid" cellpadding="5" >
+                                <h:outputText value="Acessar Menu de Cliente" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.cadcliente}" />
+                                <h:outputText value="Alterar Cadastro de Cliente" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.cadclienteeditar}" />
+                                <h:outputText value="Cadastrar Novo Cliente" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.cadclienteincluir}" />
+                                <h:outputText value="Desativar/ativar Cliente" class="fonte"/>
+                                <p:selectBooleanCheckbox value="#{PerfilMB.perfil.cadclientesituacao}" />
+                            </h:panelGrid>
+                            <br></br>
+                           <h:panelGrid columns="2" style="border:50px;margin-left: 57%" class="panelgrid4" cellpadding="5" >
+                               <h:outputText value="*Observações:" class="fonte"/>
+                               <br></br>
+                                <h:outputText value="Permissão de Acesso" class="fonte"/>
+                                <img src="../../resources/img/checktrue.png" />
+                                 <h:outputText value="Acesso Negado" class="fonte"/>
+                                 <img src="../../resources/img/checkfalse.png"/>
+                            </h:panelGrid>
+                            <br></br> <br></br> <br></br>
+                           
+                    <br></br>
+                    <p:commandLink  title="Confirmar" class="cadastro4" action="#{PerfilMB.salvar()}" style="margin-left: 68%;text-decoration: none">
+                        <img src="../../resources/img/confirmarI.png"/>
+                    </p:commandLink>  
+                    <p:commandLink title="Cancelar" class="cancelar" action="#{PerfilMB.cancelar()}" style="margin-left: 2%;text-decoration: none">
+                        <img src="../../resources/img/cancelarI.png"/>
+                    </p:commandLink>  
+                </div>
+                
+            </h:form>     
+
+        </ui:define>
+    </ui:composition>
+</html>

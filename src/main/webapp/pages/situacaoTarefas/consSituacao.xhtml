@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/pages/templates/default.xhtml">
+        <ui:define name="corpo">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <img src="../../resources/img/ajax-loader.gif" />
+            </p:dialog>
+            <h:form>
+                <div id="centro2" ><br></br>
+                    <legend class="titulo" style="margin-left: 45%;font-size: 30px">Situação</legend>
+                   
+                   
+                    <p:selectOneMenu id="departamento" value="#{SituacaoMB.idDepartamento}" style="width:160px;margin-left: 3.5%" class="filtrar" >
+                        <f:selectItem itemLabel="Departamentos" itemValue="0" noSelectionOption="true"/> 
+                        <f:selectItems value="#{SituacaoMB.listaDepartamento}" var="varDepartamento" itemLabel="#{varDepartamento.nome}" itemValue="#{varDepartamento.iddepartamento}" />
+                        <p:ajax event="change" listener="#{SituacaoMB.gerarListaSubdepartamento()}" update="sub" />
+                    </p:selectOneMenu>
+                    <p:selectOneMenu id="sub" value="#{SituacaoMB.idSubdepartamento}"  style="width:160px" class="filtrar">
+                        <f:selectItem itemLabel="Sub-Departamentos" itemValue="0" noSelectionOption="true"/> 
+                        <f:selectItems value="#{SituacaoMB.listaSubdepartamento}" var="varSub" itemLabel="#{varSub.nome}" itemValue="#{varSub.idsubdepartamento}" />
+                        <p:ajax event="change" listener="#{SituacaoMB.gerarListaRotina()}" update="nomeRotina" />
+                    </p:selectOneMenu>
+                    <p:selectOneMenu id="nomeRotina" value="#{SituacaoMB.idRotina}"  style="width:160px" class="filtrar">
+                        <f:selectItem itemLabel="Rotina " itemValue="0" noSelectionOption="true"/> 
+                        <f:selectItems value="#{SituacaoMB.listaRotina}" var="varRotina" itemLabel="#{varRotina.nome}" itemValue="#{varRotina.idrotina}" />
+                </p:selectOneMenu>
+                    <p:commandLink  title="Pesquisar" class="espaco1"  action="#{SituacaoMB.gerarListaSituacao()}" update="tabelaSituacao" style="text-decoration: none">
+                        <img src="../../resources/img/pesquisarI.png" />
+                    </p:commandLink>
+                        <br></br> <br></br>
+                <p:dataTable id="tabelaSituacao" var="tarefasHoje" value="#{SituacaoMB.listaSituacao}" class="dataGrid" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
+                             scrollable="true" scrollHeight="400"  rowIndexVar="rowIx">
+                    <p:column headerText="Cliente" style="width:150px;" styleClass="border">
+                        <h:outputText value="#{tarefasHoje.cliente.nomefantasia}" />
+                    </p:column>
+                    <p:column headerText="Jan" style="width:35px;" styleClass="alinhaCentro">
+                        <p:graphicImage value="#{SituacaoMB.imagemJan(tarefasHoje)}" />
+                    </p:column>
+
+                    <p:column headerText="Fev" style="width:35px;" styleClass="alinhaCentro">
+                        <p:graphicImage value="#{SituacaoMB.imagemFev(tarefasHoje)}" />
+                    </p:column>
+
+                    <p:column headerText="Mar" style="width:35px;" styleClass="alinhaCentro">
+                        <p:graphicImage value="#{SituacaoMB.imagemMar(tarefasHoje)}" />
+                    </p:column>
+
+                    <p:column headerText="Abr" style="width:35px;" styleClass="alinhaCentro">
+                        <p:graphicImage value="#{SituacaoMB.imagemAbr(tarefasHoje)}" />
+                    </p:column>
+
+                    <p:column headerText="Mai" style="width:35px;" styleClass="alinhaCentro">
+                        <p:graphicImage value="#{SituacaoMB.imagemMai(tarefasHoje)}" />
+                    </p:column>
+
+                    <p:column headerText="Jun" style="width:35px;" styleClass="alinhaCentro">
+                        <p:graphicImage value="#{SituacaoMB.imagemJun(tarefasHoje)}" />
+                    </p:column>
+
+                    <p:column headerText="Jul" style="width:35px;" styleClass="alinhaCentro">
+                        <p:graphicImage value="#{SituacaoMB.imagemJul(tarefasHoje)}" />
+                    </p:column>
+
+                    <p:column headerText="Ago" style="width:35px;" styleClass="alinhaCentro">
+                        <p:graphicImage value="#{SituacaoMB.imagemAgo(tarefasHoje)}" />
+                    </p:column>
+
+                    <p:column headerText="Set" style="width:35px;" styleClass="alinhaCentro">
+                        <p:graphicImage value="#{SituacaoMB.imagemSet(tarefasHoje)}" />
+                    </p:column>
+
+                    <p:column headerText="Out" style="width:35px;" styleClass="alinhaCentro">
+                        <p:graphicImage value="#{SituacaoMB.imagemOut(tarefasHoje)}" />
+                    </p:column>
+
+                    <p:column headerText="Nov" style="width:35px;" styleClass="alinhaCentro">
+                        <p:graphicImage value="#{SituacaoMB.imagemNov(tarefasHoje)}" />
+                    </p:column>
+
+                    <p:column headerText="Dez" style="width:35px;" styleClass="alinhaCentro">
+                        <p:graphicImage value="#{SituacaoMB.imagemDez(tarefasHoje)}" />
+                    </p:column>
+                    
+                </p:dataTable>
+                <br></br>
+            </div>
+
+        </h:form>     
+
+    </ui:define>
+</ui:composition>
+</html>

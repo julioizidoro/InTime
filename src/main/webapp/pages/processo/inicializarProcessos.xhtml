@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="resources/css/cssdialog.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <h:body>
+        <h:form id="telaInicializarProcesso" style="font-size: 12px">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <img src="../../resources/img/ajax-loader.gif" />
+            </p:dialog>
+
+            <title>Iniciar Processo</title>
+            <div > 
+                
+                <p:inputText value="#{iniciarProcessoMB.processo.descricao}" style="width:81%;font-weight:bold;margin-left: 9%"/>
+                <br></br>
+                <h:panelGrid columns="3">
+                    <p:inputMask  mask="99/99/9999" style="width:90px;margin-left: 18%" value="#{iniciarProcessoMB.processosituacao.dataabertura}" readonly="true" >
+                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo" />
+                </p:inputMask>
+                     <p:selectOneMenu value="#{iniciarProcessoMB.cliente}"   style="width:240px;margin-left: 10%"
+                                 converter="ClienteConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                    <f:selectItem itemLabel="Clientes" itemValue="0" noSelectionOption="true"    />
+                    <f:selectItems value="#{iniciarProcessoMB.listaCliente}" var="clienteSelecionado" itemLabel="#{clienteSelecionado.nomefantasia}" itemValue="#{clienteSelecionado}"/>
+                    <f:attribute name="listaCliente" value="#{iniciarProcessoMB.listaCliente}"/>
+                </p:selectOneMenu>
+                    <br></br><br></br> 
+                <p:selectOneMenu id="departamentos" value="#{iniciarProcessoMB.departamento}"  style="width:240px;margin-left: 18%"
+                                 converter="departamentoConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                    <f:selectItem itemLabel="Depatamentos" itemValue="0" noSelectionOption="true" />
+                    <f:selectItems value="#{iniciarProcessoMB.listaDepartamento}" var="departamento" itemLabel="#{departamento.nome}" itemValue="#{departamento}"/>
+                    <f:attribute name="listaDepartamento" value="#{iniciarProcessoMB.listaDepartamento}"/>
+                    <p:ajax event="change"   update="subdepartamentos" />
+
+                </p:selectOneMenu>
+
+                <p:selectOneMenu id="subdepartamentos" value="#{iniciarProcessoMB.subdepartamento}"   style="width:240px;margin-left: 10%"
+                                 converter="subDepartamentoConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                    <f:selectItem itemLabel="Sub-Depatamentos" itemValue="0" noSelectionOption="true"  />
+                    <f:selectItems value="#{iniciarProcessoMB.departamento.subdepartamentoList}" var="subdepartamentoSelecionado" itemLabel="#{subdepartamentoSelecionado.nome}" itemValue="#{subdepartamentoSelecionado}"/>
+                    <f:attribute name="listaSubDepartamento" value="#{iniciarProcessoMB.departamento.subdepartamentoList}"/>
+                </p:selectOneMenu>
+                </h:panelGrid>
+                <br></br>
+                <p:dataTable id="tabelainicializarProcessos" var="inicializarprocesso" value="#{iniciarProcessoMB.listaProcessoAtividade}" styleClass="tabelainicializarprocessos" 
+                             scrollable="true" scrollHeight="200"  rowIndexVar="rowIx" editable="true" editMode="cell">
+
+                    <p:ajax event="cellEdit" update=":telaInicializarProcesso:tabelainicializarProcessos" />
+                    <p:column headerText="Atividades" styleClass="border">
+                        <h:outputText value="#{inicializarprocesso.processorotina.descricao}" />
+                    </p:column>
+                    
+                     <p:column headerText="Data" style="width:100px;" styleClass="border">
+                           <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{inicializarprocesso.datexecucao}" >
+                                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                     </h:outputText>  
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:inputMask id="dataexecucao" value="#{inicializarprocesso.datexecucao}" mask="99/99/9999" style="width:100%">
+                                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                    </p:inputMask>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                    
+                    
+                    <p:column headerText="Usuario" styleClass="border">
+                        <p:cellEditor>
+                            <f:facet name="output">
+                                <h:outputText value="#{inicializarprocesso.usuario.nome}" />
+                            </f:facet>
+                            <f:facet name="input">
+                                <p:selectOneMenu id="usuario" value="#{inicializarprocesso.usuario}" class="espaco2" style="width:90%" converter="usuarioConverter">
+                                    <f:selectItem itemLabel="Selecione" itemValue="0"   />
+                                    <f:selectItems value="#{iniciarProcessoMB.listaUsuario}" var="usuarioselecionado" itemLabel="#{usuarioselecionado.nome}" itemValue="#{usuarioselecionado}"/>
+                                    <f:attribute name="listaUsuario" value="#{iniciarProcessoMB.listaUsuario}"/>
+                                </p:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+                    <p:column style="width:18px" styleClass="border">
+                        <p:selectBooleanCheckbox value="#{inicializarprocesso.selecionado}" />
+                    </p:column>
+                </p:dataTable>
+                <br></br>    
+                <p:commandLink action="#{iniciarProcessoMB.salvar()}" update="@all" ajax="true" title="Confirmar" style="margin-left:85%;text-decoration: none">
+                    <img src="../../resources/img/confirmarI.png" />
+                </p:commandLink>
+                <p:commandLink action="#{iniciarProcessoMB.fechar()}" title="Cancelar" style="margin-left:2%;text-decoration: none">
+                    <img src="../../resources/img/cancelarI.png"  />
+                </p:commandLink>
+               
+            </div>
+        </h:form>
+    </h:body>
+
+</html>

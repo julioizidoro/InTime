@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <h:body class="body2">
+        <h:form  id="alterarSenha" style="font-size: 12px;">
+         <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <img src="../../resources/img/ajax-loader.gif" />
+            </p:dialog>
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <title>Alterar Senha</title>
+                      <br></br> 
+                       <p:outputLabel value="Nova Senha" for="novasenha"  style="margin-left: 15%;font-size: 12px" />
+
+                            <h:panelGrid columns="2" cellpadding="5" >
+                                <p:inputText  id="novasenha" value="#{usuarioLogadoMB.novaSenha}"  size="25" maxlength="50"  class="left" type="password" style="font-size: 14px;margin-left: 14%" /> 
+                            </h:panelGrid>
+
+                            <p:outputLabel value="Confirmar Senha" for="confirmarsenha"  style="margin-left: 15%;font-size: 12px" />
+
+                            <h:panelGrid columns="2" cellpadding="5" >
+                                <p:inputText  id="confirmarsenha" value="#{usuarioLogadoMB.confirmaNovaSenha}"  size="25" maxlength="50"  class="left" type="password" style="font-size: 14px;margin-left: 14%" /> 
+                            </h:panelGrid>
+
+                            <p:commandLink title="Confirmar"  class="excel"  action="#{usuarioLogadoMB.confirmaNovaSenha()}" style="text-decoration: none; margin-left: 60%" >
+                                <img src="../../resources/img/confirmarI.png" width="30" height="30"/>
+                            </p:commandLink>
+                            <p:commandLink title="Cancelar" class="excel" action="#{usuarioLogadoMB.cancelarTrocaSenha()}" style="text-decoration: none;margin-left: 2%" >
+                                <img src="../../resources/img/cancelarI.png" width="30" height="30"/>
+                            </p:commandLink>  
+                    <br></br>
+                   
+                </h:form>     
+
+    </h:body>
+</html>

@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/pages/templates/default.xhtml">
+        <ui:define name="corpo">
+            <h:form id="consUsuario">
+                <div id="centro2" ><br></br>
+                    <p:growl id="growl2" showDetail="true" sticky="true" />
+                    <legend class="titulo" style="margin-left: 45%;font-size: 30px">Consulta de Usuários</legend>
+                    
+                     <p:commandLink  title="Adicionar Usuário" styleClass="cadastro5" action="#{UsuarioMB.novo()}" update="consUsuario" style="margin-left: 72%">
+                     <img src="../../resources/img/adicionarI.png" /> 
+                    </p:commandLink>
+                    <br></br>
+                    <p:dataTable id="tabelaUsuario" var="consUsuario" value="#{UsuarioMB.listaUsuario}" class="dataGridcadastro" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
+                                 scrollable="true"   scrollHeight="400" rowIndexVar="rowIx">
+                        <p:column headerText="Nome"  styleClass="border">
+                            <h:outputText value="#{consUsuario.nome}"/>
+                        </p:column>
+
+                        <p:column headerText="Cargo" styleClass="border">
+                            <h:outputText value="#{consUsuario.cargo}" />
+                        </p:column>
+                          <p:column headerText="E-mail" styleClass="border">
+                              <h:outputText value="#{consUsuario.email}" />
+                        </p:column>
+
+                        <p:column style="width:35px" styleClass="alinhaCentro">
+                            <p:commandLink  id="editar" title="Editar" action="#{UsuarioMB.editar(consUsuario)}" update="tabelaUsuario">
+                                <img src="../../resources/img/editarI.png" width="25" height="25"/>
+                                <f:param name="id_usuario" value="#{consUsuario.idusuario}"/>
+                            </p:commandLink>
+                        </p:column>
+                         <p:column style="width:35px" styleClass="alinhaCentro">
+                             <p:commandLink id="desabilitar" title="Habilitar/Desabilitar"  actionListener="#{UsuarioMB.pegarLinhaTabela(rowIx)}" action="#{UsuarioMB.habilitarDesabilitar()}" update="tabelaUsuario" >
+                                 <img src="#{UsuarioMB.retornarImagemSituacao(consUsuario)}"/>
+                              </p:commandLink>
+                        </p:column>
+                    </p:dataTable>
+                    <br></br>
+                   
+                    <br></br>
+                      
+                </div>
+                
+            </h:form>     
+
+        </ui:define>
+    </ui:composition>
+</html>

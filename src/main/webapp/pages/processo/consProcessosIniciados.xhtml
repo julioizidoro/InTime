@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/pages/templates/default.xhtml">
+        <ui:define name="corpo">
+            <h:form id="consprocessos">
+                <div id="centro2" ><br></br>
+                    <p:growl id="growl2" showDetail="true" sticky="true" />
+                    <legend class="titulo" style="font-size: 30px;margin-left: 45%">Consulta de Processos Iniciados</legend>
+                    <br></br>
+                    <p:contextMenu for="tabelaProcessosIniciados" style="font-size: 10px;width: 15%">
+                        <p:menuitem value="Visualzar Atividades" icon=" ui-icon-plus" action="#{processosIniciadosMB.visualizarAtividadesIniciadas()}" style="font-size: 11px"/>    
+                    </p:contextMenu>                                                                    
+                    
+                    <p:dataTable id="tabelaProcessosIniciados" var="processosIniciados" value="#{processosIniciadosMB.listaSituacao}" class="dataGriddialog" 
+                                 selection="#{processosIniciadosMB.processosituacao}"    scrollable="true" scrollHeight="380" style="margin-left: 22%;width: 70%;border-bottom-left-radius: 3px;border-bottom-right-radius: 3px" selectionMode="single" rowKey="#{processosIniciados.idprocessosituacao}" >
+
+                        <p:column headerText="Cliente" style="width:150px;" styleClass="border">
+                            <h:outputText value="#{processosIniciados.cliente.nomefantasia}" />
+                        </p:column>                
+                        <p:column headerText="Data de Abertura" style="width:70px;" styleClass="border">
+                            <h:outputText value="#{processosIniciados.dataabertura}" >
+                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Data de Conclusão" style="width:70px;" styleClass="border">
+                            <h:outputText value="#{processosIniciados.dataconclusao}" >
+                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Status" style="width:35px;" styleClass="alinhaCentro">
+                            <p:graphicImage value="#{processosIniciadosMB.imagemStatus(processosIniciados)}" />
+                        </p:column>
+                    </p:dataTable>
+                    
+                    <p:commandLink style="height:6%;margin-left: 89%" title="Cancelar"  action="#{processosIniciadosMB.fechar()}" update="@all" ajax="true" >
+                        <img src="../../resources/img/cancelarI.png"/>
+                    </p:commandLink>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+   </html>

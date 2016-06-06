@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/pages/templates/default.xhtml">
+        <ui:define name="corpo">
+            <h:form id="consTela">
+                <div id="centro2" ><br></br>
+                    <p:growl id="growl2" showDetail="true" sticky="true" />
+                    <legend class="titulo" style="font-size: 30px;margin-left: 45%">Consulta de Atividades Módulos</legend>
+                    <br></br>
+                    <p:commandLink styleClass="cadastro5" action="#{atividadeModuloMB.novo(atividadeModuloMB.modulos)}" update="@all"  oncomplete="popAprovar.hide(); #{meuBean.objetos}" title="Adicionar atividade Modulo">
+                        <img src="../../resources/img/adicionarI.png"  style="margin-left: 71%"/> 
+                    </p:commandLink>  
+                    <p:contextMenu for="tabelaAtividade">
+                        <p:menuitem value="Alterar"  icon=" ui-icon-pencil"  action="#" />
+                        <p:menuitem value="Excluir"  icon=" ui-icon-tag" action="#"  />
+                    </p:contextMenu>
+                    <p:dataTable id="tabelaAtividade" var="consAtividade" value="#{atividadeModuloMB.listaAtividadesModulo}" class="dataGridcadastro" scrollable="true" scrollHeight="300" editable="true" editMode="cell" >
+                        <p:ajax event="cellEdit"  listener="#{atividadeModuloMB.salvarAtividade(event, consAtividade)}" update=":consTela:tabelaAtividade" />
+                        <p:column headerText="Descrição"  styleClass="border">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{consAtividade.descricao}" /></f:facet>
+                                <f:facet name="input"><p:inputText id="descricao" value="#{consAtividade.descricao}" style="width:100%"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+
+                        <p:column headerText="Data Final" styleClass="border" style="width: 70px;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{consAtividade.datafinal}" >
+                                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                    </h:outputText></f:facet>
+                                <f:facet name="input"><p:calendar id="dataFinal" value="#{consAtividade.datafinal}" style="width:100%" pattern="dd/MM/yyyy">
+                                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                    </p:calendar></f:facet>
+                            </p:cellEditor>  
+                        </p:column>
+                        <p:column headerText="RACI" styleClass="border" style="width:45px;">
+                            <p:commandLink action="#{atividadeModuloMB.raci(consAtividade)}">
+                                <img src="../../resources/img/pesquisarI.png"/>
+                                
+                            </p:commandLink>
+                        </p:column>
+                        <p:column headerText="Situação" styleClass="border" style="width:80px;">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{consAtividade.situacao}" /></f:facet>
+                                <f:facet name="input"><p:inputText id="situacao" value="#{consAtividade.situacao}" /></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                    </p:dataTable>
+                    <br></br>
+                    <p:commandLink title="Voltar"  action="#{atividadeModuloMB.voltar(atividadeModuloMB.modulos.projeto)}" style="margin-left: 84%" >
+                        <img src="../../resources/img/voltarI.png"/>
+                    </p:commandLink>
+
+
+                    <br></br><br></br>
+
+                </div>
+
+            </h:form>     
+
+        </ui:define>
+    </ui:composition>
+</html>

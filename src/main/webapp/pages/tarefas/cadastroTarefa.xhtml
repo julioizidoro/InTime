@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <h:body class="body2">
+        <h:form id="cadastrotarefa" class="body2" style="font-size: 12px"> <br></br><br></br>
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <img src="../../resources/img/ajax-loader.gif" />
+            </p:dialog>
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <title>Adicionar Tarefa</title>
+            <p:inputText  value="#{cadAtividadeMB.atividades.nome}" style="width:92%;margin-left:2%" placeholder="Titulo" title="Titulo da Tarefa"/>
+            <br></br><br></br>
+            <h:panelGrid columns="2" class="semBorda" style="width: 100%;">
+                <p:inputMask id="prazo" size="10" mask="99/99/9999"  maxlength="14" class="espaco5dois" value="#{cadAtividadeMB.atividades.prazo}" >
+                    <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                </p:inputMask>
+                <p:selectOneMenu value="#{cadAtividadeMB.cliente}" style="width:368px;margin-left:5%" 
+                                 converter="ClienteConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                    <f:selectItems value="#{listaAtividadesMB.listaCliente}" var="clienteSelecionado" itemLabel="#{clienteSelecionado.nomefantasia}" itemValue="#{clienteSelecionado}"/>
+                    <f:attribute name="listaCliente" value="#{listaAtividadesMB.listaCliente}"/>
+                </p:selectOneMenu>
+            </h:panelGrid>
+            <br></br>
+            <p:selectOneMenu id="departamento" value="#{cadAtividadeMB.departamento}" style="width:40.5%;margin-left:2%"
+                             converter="departamentoConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                <f:selectItems value="#{listaAtividadesMB.listaDepartamento}" var="departamento" itemLabel="#{departamento.nome}" itemValue="#{departamento}"/>
+                <f:attribute name="listaDepartamento" value="#{listaAtividadesMB.listaDepartamento}"/>
+                <p:ajax event="change" update="subdepartamento" />
+            </p:selectOneMenu>
+            <p:selectOneMenu id="subdepartamento" value="#{cadAtividadeMB.subdepartamento}" style="width:32%;margin-left:11%"
+                             converter="subDepartamentoConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                <f:selectItems value="#{cadAtividadeMB.departamento.subdepartamentoList}" var="subdepartamentoSelecionado" itemLabel="#{subdepartamentoSelecionado.nome}" itemValue="#{subdepartamentoSelecionado}"/>
+                <f:attribute name="listaSubDepartamento" value="#{cadAtividadeMB.departamento.subdepartamentoList}"/>
+            </p:selectOneMenu>
+             <br></br><br></br>
+            <p:commandLink id="btnprioridade" style="margin-left:2%;text-decoration: none" title="Prioridade" oncomplete="PF('dialogprioridade').show()">
+                <img src="../../resources/img/selecionarPrioridade.png" />
+            </p:commandLink>
+            <p:dialog id="panelprioridade" hideEffect="fade" widgetVar="dialogprioridade" width="260" header="Prioridade">
+                <br></br> <p:ajax event="close"  />
+                <p:selectOneMenu id="prioridade" value="#{cadAtividadeMB.atividades.prioridade}" class="espaco2" style="width:100%">
+                    <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
+                    <f:selectItem itemLabel="Normal" itemValue="3-normal" />
+                    <f:selectItem itemLabel="Alta" itemValue="2-alta" />
+                    <f:selectItem itemLabel="Urgente" itemValue="1-urgente" />
+                </p:selectOneMenu>
+                <br></br><br></br>
+            </p:dialog>
+            <p:commandLink  id="btnExecutor" style="margin-left: 2%;text-decoration: none" title="Usuário Executor" oncomplete="PF('dialogexecurtor').show()">
+                <img src="../../resources/img/selecionarUsuarioExecutor.png" />
+            </p:commandLink>
+            <p:dialog id="panelexecutor" hideEffect="fade" widgetVar="dialogexecurtor" width="260" header="Usuário Executor">
+                 <p:ajax event="close"  />
+                 <br></br>
+                 <p:selectOneMenu id="usuario" value="#{cadAtividadeMB.usuario}" class="espaco2" style="width:90%"
+                                  converter="usuarioConverter"  filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                     <f:selectItems itemLabel="Selecione" itemValue="0"/>
+                     <f:selectItems value="#{listaAtividadesMB.listaUsuario}" var="usuarioselecionado" itemLabel="#{usuarioselecionado.nome}" itemValue="#{usuarioselecionado}"/>
+                     <f:attribute name="listaUsuario" value="#{listaAtividadesMB.listaUsuario}"/>
+                </p:selectOneMenu><br></br><br></br>
+            </p:dialog>
+            <p:commandLink id="btnNotificado" style="margin-left: 2%;text-decoration: none" oncomplete="PF('dialoginformado').show()" title="Usúario Notificado" >
+                <img src="../../resources/img/selecionarUsuarioInformante.png" />
+            </p:commandLink>
+             <p:dialog id="panelnotificado" width="510" position="top" height="180" hideEffect="fade" style="z-index: 3!important;overflow: visible!important;position: fixed;margin-top:1%" widgetVar="dialoginformado" >
+                <p:ajax event="close"  />
+                <p:selectOneMenu id="participante" value="#{cadAtividadeMB.usuarioParticipante}" class="espaco1" style="width:75%"
+                                  converter="usuarioConverter"  filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                     <f:selectItem itemLabel="Selecione" itemValue="0"/>
+                     <f:selectItems value="#{listaAtividadesMB.listaUsuario}" var="usuarioselecionado" itemLabel="#{usuarioselecionado.nome}" itemValue="#{usuarioselecionado}"/>
+                     <f:attribute name="listaUsuario" value="#{listaAtividadesMB.listaUsuario}"/>
+                </p:selectOneMenu>
+                <p:commandLink action="#{cadAtividadeMB.adicionarParcitipante()}" style="text-decoration: none;margin-left:6%" update="tabelaParticipante" title="Adicionar">
+                     <img src="../../resources/img/adicionarI.png" width="6%" />
+                 </p:commandLink>
+                <p:commandLink oncomplete="PF('dialoginformado').hide()" style="text-decoration: none;margin-left:2%" title="Fechar" update="panelnotificado">
+                     <img src="../../resources/img/cancelarI.png" width="6%" />
+                 </p:commandLink>
+                 <br></br><br></br>
+                 <p:dataGrid  id="tabelaParticipante" columns="3" layout="grid"  rows="6" value="#{cadAtividadeMB.listaParticipante}"  var="participantes" style="border: none" 
+                              paginatorTemplate=" {PreviousPageLink} {NextPageLink}"
+                                 paginator="true">
+                        <h:panelGrid columns="2" style="width:80%">
+                             <p:outputLabel class="horizontal" value="#{participantes.nome}"/>
+                             <p:commandLink action="#{cadAtividadeMB.excluirParticipante()}" title="Excluir" update="tabelaParticipante" style="text-decoration: none;margin-left: -3%">
+                                <img src="../../resources/img/excluirI.png" width="20" height="20"/>
+                             </p:commandLink>
+                        </h:panelGrid>
+                 </p:dataGrid >
+            </p:dialog>
+             <p:commandLink action="#{cadAtividadeMB.salvar()}" title="Confirmar" style="margin-left:52%;text-decoration: none" update="@all">
+                <img src="../../resources/img/confirmarI.png" width="40" height="40"/>
+            </p:commandLink>
+             <p:commandLink  action="#{cadAtividadeMB.fecharDialogAtividades()}" title="Cancelar" style="margin-left:2%;text-decoration: none">
+                <img src="../../resources/img/cancelarI.png"  width="40" height="40"/>
+            </p:commandLink>
+            <br></br><br></br>
+        </h:form>
+    </h:body>
+
+</html>

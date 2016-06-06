@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Relatório de Projeto" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="feecb075-5a7f-42f6-832b-1a654a7aa009">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="idprojeto" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT distinct projeto.nome as nomeprojeto, cliente.nomefantasia, projeto.datainicio,
+modulos.nome as nomemodulo, modulos.datainicial as datainicialmodulos, modulos.datafinal as datafinalmodulo, atividademodulo.descricao as descricaoatividade, modulos.idmodulos, atividademodulo.idatividademodulo,
+atividademodulo.dataInicio as datainicialatividade, atividademodulo.datafinal as datafinalatividade
+From  projeto join cliente on projeto.cliente_idcliente = cliente.idcliente
+join modulos on modulos.projeto_idprojeto = projeto.idprojeto
+join atividademodulo on atividademodulo.modulos_idmodulos = modulos.idmodulos
+where  projeto.idprojeto=$P{idprojeto} order by modulos.datainicial, modulos.nome, atividademodulo.descricao]]>
+	</queryString>
+	<field name="nomeprojeto" class="java.lang.String"/>
+	<field name="nomefantasia" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="datainicio" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nomemodulo" class="java.lang.String"/>
+	<field name="datainicialmodulos" class="java.sql.Date"/>
+	<field name="datafinalmodulo" class="java.sql.Date"/>
+	<field name="descricaoatividade" class="java.lang.String"/>
+	<field name="idmodulos" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="idatividademodulo" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="datainicialatividade" class="java.sql.Date"/>
+	<field name="datafinalatividade" class="java.sql.Date"/>
+	<variable name="pTotalEntrada" class="java.lang.Float" resetType="Group" resetGroup="modulos" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<variable name="pTotalSaida" class="java.lang.Float" resetType="Group" resetGroup="modulos" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<variable name="totalSaida" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<variable name="totalEntrada" class="java.lang.Float" calculation="Sum">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<group name="modulos" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{idmodulos}]]></groupExpression>
+		<groupHeader>
+			<band height="21">
+				<line>
+					<reportElement x="0" y="20" width="554" height="1" uuid="a2660b24-688c-4af7-a6ed-bc7241516f27"/>
+				</line>
+				<rectangle>
+					<reportElement x="0" y="1" width="555" height="18" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="c7812e1c-47ba-4026-9ef1-626d54191224"/>
+				</rectangle>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="429" y="2" width="113" height="17" uuid="074e0c13-a70c-42eb-b1c9-7dfd34aa60d2"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{datafinalmodulo}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="20" y="2" width="243" height="17" uuid="354ed30c-e9ac-4dbd-860e-d04da7f85992"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nomemodulo}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="310" y="2" width="112" height="17" uuid="c8721f66-93c4-4f66-9ce5-804d39b1b3f9"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{datainicialmodulos}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="1" width="554" height="1" uuid="b1510bca-753d-48fe-934f-2f205d928e33"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="atividademodulo">
+		<groupExpression><![CDATA[$F{idatividademodulo}]]></groupExpression>
+		<groupHeader>
+			<band height="16">
+				<textField>
+					<reportElement x="45" y="1" width="253" height="15" uuid="78ba20b5-d8c8-442b-ae61-c702e6b52524"/>
+					<textFieldExpression><![CDATA[$F{descricaoatividade}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="309" y="1" width="113" height="15" uuid="4a09a036-a68e-4b47-978c-97bd4c9b35f8"/>
+					<textFieldExpression><![CDATA[$F{datainicialatividade}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy">
+					<reportElement x="429" y="1" width="113" height="15" uuid="a219b53c-8132-4f28-b58c-603e31dc4366"/>
+					<textFieldExpression><![CDATA[$F{datafinalatividade}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="95" splitType="Stretch">
+			<textField>
+				<reportElement style="Detail" x="78" y="14" width="476" height="33" uuid="7ab278a3-567e-4655-aabb-0e815544389f"/>
+				<textElement textAlignment="Center">
+					<font size="26" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Projeto  " + $F{nomeprojeto}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="20" y="2" width="55" height="55" uuid="56108747-fdb8-450a-b133-25a744043805"/>
+				<imageExpression><![CDATA["C:\\Users\\Kamila\\Documents\\Saved Pictures\\logo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="30" y="59" width="72" height="17" uuid="0a30abab-404d-4bfe-92d5-8cfd6f8104f7"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data Início:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="102" y="59" width="171" height="17" uuid="29705f5a-32c2-41b8-b1f0-95ca0f737b90"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{datainicio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="309" y="82" width="100" height="13" uuid="c1156fa2-9486-4fbe-b1fa-1fa2c8401772"/>
+				<text><![CDATA[Data Inicial]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="429" y="82" width="100" height="13" uuid="6621acc5-6b08-45f5-a1bc-b4c55b3a6366"/>
+				<text><![CDATA[Data Termino]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="82" width="100" height="13" uuid="0fc8dc7b-162c-47bf-8fe8-b40ebc0eebc8"/>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<lastPageFooter>
+		<band height="18">
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="4" width="197" height="14" uuid="f66b3d10-a5e0-47ee-a585-2086022d873b"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="1" width="554" height="1" uuid="26958976-a9fb-44af-8cd9-19989bfee747"/>
+			</line>
+		</band>
+	</lastPageFooter>
+</jasperReport>

@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/pages/templates/default.xhtml">
+        <ui:define name="corpo">
+           <h:form id="consprocessos">
+                <div id="centro2" ><br></br>
+                    <p:growl id="growl2" showDetail="true" sticky="true" />
+                    <legend class="titulo" style="font-size: 30px;margin-left: 45%">Consulta de Processos</legend>
+                     <br></br>
+                  
+                     <h:panelGrid columns="4">
+                         <p:inputText id="nome" placeholder="Processo" style="width:200%;font-size: 12px;margin-left:5%" value="#{processoMB.nomeProcesso}" >
+                             <p:ajax event="change"/>
+                         </p:inputText>
+                         <p:commandLink action="#{processoMB.gerarListaProcesso()}"  update="tabelaprocessos" title="Pesquisar" style="margin-left:510%;text-decoration: none">
+                            <img src="../../resources/img/pesquisarI.png"/>
+                       </p:commandLink>
+
+                       
+                       <p:commandLink  styleClass="cadastro5" action="#{processoMB.novo()}" >
+                           <img src="../../resources/img/adicionarI.png" style="margin-left:89.8%"/> 
+                           <p:ajax event="dialogReturn" listener="#{processoMB.retornoDialogNovo}" process="@this" update="tabelaprocessos"/>
+                       </p:commandLink>
+                     </h:panelGrid>
+                   
+                     
+                     <h:panelGrid columns="30" >
+                         <div id="divtabelaprocessos">
+                             <p:dataTable id="tabelaprocessos" var="processos" value="#{processoMB.listaProcesso}"  style="width:85%;font-size: 11px"
+                                          selection="#{processoMB.processo}" scrollable="true" scrollHeight="380" selectionMode="single" rowIndexVar="rowIx" rowKey="#{processos.idprocesso}" >
+                                 <f:facet name="header">
+                                     Processos
+                                 </f:facet>
+                                 <p:ajax event="rowSelect"  update=":consprocessos:tabelarotinaprocessos"  />
+                                 <p:column headerText="Descrição"  styleClass="border">
+                                     <h:outputText value="#{processos.descricao}" />
+                                 </p:column>
+
+                                 <p:column headerText="Subdepartamento" style="width:100px;" styleClass="border">
+                                     <h:outputText value="#{processos.subdepartamento.nome}" />
+                                 </p:column>
+                                 <p:column style="width:25px;" styleClass="border">
+                                     <p:commandLink title="Adicionar Atividade" action="#{processoMB.novoProcessoRotina(processos)}">
+                                         <img src="../../resources/img/adicionarI.png" width="68%" height="68%"/>
+                                         <p:ajax event="dialogReturn" listener="#{processoMB.retornoDialogAtividadeProcesso}" update=":consprocessos:tabelarotinaprocessos"/>
+                                     </p:commandLink>
+                                 </p:column>
+                                 <p:column style="width:29px;" styleClass="border">
+                                     <p:commandLink title="Iníciar" action="#{processoMB.iniciarProcesso(processos)}" >
+                                         <img src="../../resources/img/playI.png" width="68%" height="68%"/>
+                                         <p:ajax event="dialogReturn" update="@all"/>
+                                     </p:commandLink>
+                                 </p:column>
+                                 <p:column style="width:29px;" styleClass="border">
+                                     <p:commandLink title="Visualizar Iníciados" action="#{processoMB.visualizarProcessosIniciados(processos)}">
+                                         <img src="../../resources/img/pesquisarI.png" width="70%" height="70%"/>
+                                     </p:commandLink>
+                                 </p:column>
+                             </p:dataTable>
+                         </div>
+                         <div id="divtabelarotinaprocesso">
+                             <p:dataTable  id="tabelarotinaprocessos" var="rotinaprocessos" value="#{processoMB.processo.processorotinaList}" 
+                                           scrollable="true" scrollHeight="380" rowIndexVar="rowIx" style="width:100%;font-size: 11px;margin-left: -15%">
+                                 <f:facet name="header">
+                                     Atividades do Processo
+                                 </f:facet>
+                                 <p:column headerText="Descrição"  styleClass="border">
+                                     <h:outputText value="#{rotinaprocessos.descricao}" />
+                                 </p:column>
+                                  <p:column style="width:25px;" styleClass="border">
+                                      <p:commandLink title="Iníciar" action="#{processoMB.alterarProcessoAtividade(rotinaprocessos)}" >
+                                         <img src="../../resources/img/editarI.png" width="38%" height="38%"/>
+                                         <p:ajax event="dialogReturn" listener="#{processoMB.retornoDialogAtividadeProcesso}" update=":consprocessos:tabelarotinaprocessos"/>
+                                     </p:commandLink>
+                                 </p:column>
+                                 <p:column style="width:25px;" styleClass="border">
+                                     <p:commandLink title="Excluir Atividade" action="#{processoMB.excluirProcessoRotina(rotinaprocessos)}" update=":consprocessos:tabelaprocessos,:consprocessos:tabelarotinaprocessos">
+                                         <img src="../../resources/img/excluirI.png" width="40%" height="40%"/>
+                                     </p:commandLink>
+                                 </p:column>
+                             </p:dataTable>
+                         </div>
+                     </h:panelGrid>
+                    
+                </div>
+                
+            </h:form>     
+
+        </ui:define>
+    </ui:composition>
+</html>

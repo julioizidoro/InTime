@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <h:body >
+
+        <h:form id="cadDepartamento" class="body2" style="font-size: 12px">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <img src="../../resources/img/ajax-loader.gif" />
+            </p:dialog>
+
+            <title>Adicionar Departamento</title>
+
+            <br></br> 
+
+            <h:panelGrid columns="6" cellpadding="5">   
+                <p:inputText placeholder="nome"  id="nome" style="width: 150%;margin-left: 10%"   value="#{cadDepartamentoMB.departamento.nome}" />
+                <p:selectOneMenu id="responsavel" value="#{cadDepartamentoMB.departamento.usuario}" style="width:250px;margin-left: 35%" converter="usuarioConverter">
+                    <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"   />
+                    <f:selectItems value="#{cadDepartamentoMB.listaUsuario}" var="usuarioSelecionado" itemLabel="#{usuarioSelecionado.nome}" itemValue="#{usuarioSelecionado}"/>
+                    <f:attribute name="listaUsuario" value="#{cadDepartamentoMB.listaUsuario}"/>
+                </p:selectOneMenu>
+            </h:panelGrid> 
+            <br></br>
+
+            <p:commandLink  title="Confirmar" class="cadastro4" action="#{cadDepartamentoMB.salvar()}" style="margin-left: 81%">
+                <img src="../../resources/img/confirmarI.png"/>
+            </p:commandLink>  
+            <p:commandLink title="Cancelar" class="cancelar" action="#{cadDepartamentoMB.cancelar()}" style="margin-left: 2%;text-decoration: none">
+                <img src="../../resources/img/cancelarI.png"/>
+            </p:commandLink>
+
+
+        </h:form>     
+
+    </h:body>
+
+</html>

@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <h:head>
+      
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <h:body>
+        <h:form id="cadastrotarefaparticular" style="font-size: 12px">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <img src="../../resources/img/ajax-loader.gif" />
+            </p:dialog>
+             
+            <title>Adicionar Tarefa Particular</title>
+            <div >  <br></br>   
+                <p:inputText  value="#{cadAtividadeParticularMB.atividades.nome}" style="width:88%;margin-left:4.8%" class="espaco2" placeholder="Titulo"/>
+                <br></br> 
+                <br></br>
+                <h:panelGrid columns="4" class="semBorda" style="width: 100%;margin-left:2%">
+                    
+                    <p:selectOneMenu id="prioridade2" value="#{cadAtividadeParticularMB.atividades.prioridade}" style="width:160px;margin-left: 4%">
+                        <f:selectItem itemLabel="Selecione" itemValue="sn" noSelectionOption="true"/> 
+                        <f:selectItem itemLabel="Normal" itemValue="3-normal" />
+                        <f:selectItem itemLabel="Alta" itemValue="2-alta" />
+                        <f:selectItem itemLabel="Urgente" itemValue="1-urgente" />
+                    </p:selectOneMenu>
+                    <p:inputMask id="prazo2" style="width:45%;margin-left:40%"  mask="99/99/9999"  maxlength="14" value="#{cadAtividadeParticularMB.atividades.prazo}" placeholder="Data">
+                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                    </p:inputMask>
+                </h:panelGrid>
+                <br></br>  
+                <p:commandLink style="margin-left:72%"  title="Adicionar Tarefa Particular" action="#{cadAtividadeParticularMB.salvarParticular()}" update="@all" >
+                    <img src="../../resources/img/confirmarI.png"/>
+                    <p:ajax event="dialogReturn" update="@all"/>
+                </p:commandLink>
+                <p:commandLink style="margin-left:4%;text-decoration:none"  title="Cancelar" action="#{cadAtividadeParticularMB.fecharDialogAtividades()}" update="@all" ajax="true">
+                    <img src="../../resources/img/cancelarI.png"/>
+                </p:commandLink>
+            </div>
+        </h:form>
+    </h:body>
+
+</html>

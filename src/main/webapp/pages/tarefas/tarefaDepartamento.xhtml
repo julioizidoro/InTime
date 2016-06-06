@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/pages/templates/default.xhtml">
+        <ui:define name="corpo">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+        <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+            <img src="../../resources/img/ajax-loader.gif" />
+        </p:dialog>
+            <h:form id="atividades" style="font-size: 12px;">
+                <div id="centro2" >
+                    <p:growl id="growl" showDetail="true" sticky="true" /><br></br>
+                    <legend ><p:outputLabel value="#{AtividadeMB.titulo}" class="titulo" style="font-size:30px;margin-left:35%"/></legend>
+                   <br></br>
+                
+                   <p:selectOneMenu id="visualizar" value="#{atividadesEquipeMB.visualizar}" style="width:19%;margin-left: 3.5%" >
+                        <f:selectItem itemLabel="Vizualizar Todos" itemValue="sn" noSelectionOption="true"/> 
+                        <f:selectItem itemLabel="Próximos 7 dias" itemValue="proxsete" />  
+                        <f:selectItem itemLabel="Hoje" itemValue="hoje" />  
+                        <f:selectItem itemLabel="Atrasadas" itemValue="atrasadas" />   
+                    </p:selectOneMenu>
+                   
+                    <p:selectOneMenu id="departamentos" value="#{atividadesEquipeMB.departamento}"  style="width:19%;margin-left: 5%"
+                                     converter="departamentoConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                        <f:selectItem itemLabel="Todos Depatamentos" itemValue="0" noSelectionOption="true"/>
+                        <f:selectItems value="#{listaAtividadesMB.listaDepartamento}" var="departamento" itemLabel="#{departamento.nome}" itemValue="#{departamento}"/>
+                        <f:attribute name="listaDepartamento" value="#{listaAtividadesMB.listaDepartamento}"/>
+                        <p:ajax event="change"   update="subdepartamentos" />
+
+                    </p:selectOneMenu>
+                    
+                    <p:selectOneMenu id="subdepartamentos" value="#{atividadesEquipeMB.subdepartamento}" class="espaco1" style="width:18%;margin-left: 5%"
+                                     converter="subDepartamentoConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                        <f:selectItem itemLabel="Todos Sub-Depatamentos" itemValue="0" noSelectionOption="true" />
+                        <f:selectItems value="#{atividadesEquipeMB.departamento.subdepartamentoList}" var="subdepartamentoSelecionado" itemLabel="#{subdepartamentoSelecionado.nome}" itemValue="#{subdepartamentoSelecionado}"/>
+                        <f:attribute name="listaSubDepartamento" value="#{atividadesEquipeMB.departamento.subdepartamentoList}"/>
+                    </p:selectOneMenu>
+                    <br></br><br></br>
+                    
+                    <p:selectOneMenu value="#{atividadesEquipeMB.cliente}"  style="width:19%;margin-left: 3.5%"
+                                     converter="ClienteConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                        <f:selectItem itemLabel="Todos Clientes" itemValue="0"   noSelectionOption="true" />
+                        <f:selectItems value="#{listaAtividadesMB.listaCliente}" var="clienteSelecionado" itemLabel="#{clienteSelecionado.nomefantasia}" itemValue="#{clienteSelecionado}"/>
+                         <f:attribute name="listaCliente" value="#{listaAtividadesMB.listaCliente}"/>
+                    </p:selectOneMenu>
+                    
+                    <p:selectOneMenu id="usuario" value="#{atividadesEquipeMB.usuario}" style="width:19%;margin-left: 5%"
+                                  converter="usuarioConverter"  filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                        <f:selectItem itemLabel="Todos Usuários" itemValue="0"  noSelectionOption="true" />
+                        <f:selectItems value="#{listaAtividadesMB.listaUsuario}" var="usuarioselecionado" itemLabel="#{usuarioselecionado.nome}" itemValue="#{usuarioselecionado}"/>
+                        <f:attribute name="listaUsuario" value="#{listaAtividadesMB.listaUsuario}"/>
+                  </p:selectOneMenu>
+                    
+                    <p:commandLink action="#{atividadesEquipeMB.filtrarTarefasDepartamento()}" update="tabelaAtividades"  title="Filtrar" style="margin-left: 5%;text-decoration: none">
+                        <img src="../../resources/img/filtrarI.png" />
+                    </p:commandLink>
+                    <p:commandLink action="#{relatorioAtividadesEquipeMB.gerarRelatorioAtividadesEquipe()}" title="Imprimir" style="margin-left: 5%;text-decoration: none" ajax="false">
+                        <img src="../../resources/img/imprimirI.png" />
+                    </p:commandLink>
+                    
+                    <br></br><br></br>
+                    <p:contextMenu for="tabelaAtividades">
+                        <p:menuitem value="Encaminhar"  icon="ui-icon-arrowreturnthick-1-e"  action="#" />
+                        <p:menuitem value="Excluir"  icon="ui-icon-trash" action="#{AtividadeMB.excluir(tarefas)}"  />
+                    </p:contextMenu><br></br><br></br>
+                    <p:dataTable id="tabelaAtividades" var="tarefas" value="#{atividadesEquipeMB.listaAtividades}" class="dataGrid" rowStyleClass="#{atividadesEquipeMB.atrasadas(tarefas) eq 'normal' ? 'letraPreta' : 
+                                                                              atividadesEquipeMB.atrasadas(tarefas) eq 'atrasado' ? 'letraVermelha' :
+                                                                              null}"  editable="true" editMode="cell" rowIndexVar="rowIx" 
+                                 selection="#{AtividadeMB.atividades}" selectionMode="single" rowKey="#{tarefas.idatividades}">
+
+                        <p:ajax event="cellEdit"  listener="#{atividadesEquipeMB.salvarEditarLinhaTabela(tarefas)}" update="@all" />
+
+                        <p:column headerText=""  styleClass="border" sortBy="#{tarefas.nome}">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{tarefas.nome}" /></f:facet>
+                                <f:facet name="input"><p:inputText id="titulo" value="#{tarefas.nome}" style="width:100%"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="" style="width:130px;" styleClass="border" sortBy="#{tarefas.nome}">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{tarefas.usuario.nome}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:selectOneMenu id="usuario" value="#{tarefas.usuario}"  style="width:100%">
+                                        <f:selectItems value="#{listaAtividadesMB.listaUsuario}" var="usuarioselecionado" itemLabel="#{usuarioselecionado.nome}" itemValue="#{usuarioselecionado}"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="" style="width:190px;" styleClass="alinhaCentro" sortBy="#{tarefas.subdepartamento.departamento.nome}">
+                            <p:cellEditor>
+                                <f:facet name="output"> <h:outputText value="#{tarefas.subdepartamento.nome}" /></f:facet>
+                                <f:facet name="input">
+                                     <p:selectOneMenu id="subdepartamento" value="#{tarefas.subdepartamento}" style="width:100%" converter="subDepartamentoConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                                        <f:selectItems value="#{tarefas.subdepartamento.departamento.subdepartamentoList}" var="subdepartamentoSelecionado" itemLabel="#{subdepartamentoSelecionado.nome}" itemValue="#{subdepartamentoSelecionado}"/>
+                                        <f:attribute name="listaSubDepartamento" value="#{tarefas.subdepartamento.departamento.subdepartamentoList}"/>
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="" style="width:46px;" styleClass="alinhaCentro">
+                            <p:commandButton icon="ui-icon-comment" action="#{AtividadeMB.verComentarios(rowIx)}"  update=":atividades:dialog_addComentario" oncomplete="PF('vercomentario').show()" value="#{AtividadeMB.quantidadeComentario(tarefas)}" style="background:transparent;border:2px #26C7EC;color:#585858;margin-left: -12%;-webkit-border-radius: 3;-moz-border-radius: 3;border-radius: 3px;border: solid #26C7EC 2px;" >
+
+                            </p:commandButton>
+                        </p:column>
+
+                        <p:column headerText="" style="width:200px;" styleClass="alinhaCentro"  sortBy="#{tarefas.cliente.nomefantasia}">
+                            <p:cellEditor>
+                                <f:facet name="output"> <h:outputText value="#{tarefas.cliente.nomefantasia}" /></f:facet>
+                                <f:facet name="input"> 
+                                    <p:selectOneMenu value="#{tarefas.cliente}" style="width:100%" converter="ClienteConverter">
+                                        <f:selectItems value="#{listaAtividadesMB.listaCliente}" var="clienteSelecionado" itemLabel="#{clienteSelecionado.nomefantasia}" itemValue="#{clienteSelecionado}"/>
+                                        <f:attribute name="listaCliente" value="#{listaAtividadesMB.listaCliente}"/>
+                                     </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="" style="width:10%;" styleClass="alinhaCentro" sortBy="#{tarefas.prazo}" >
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <h:outputText value="#{tarefas.prazo}" >
+                                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                    </h:outputText>  
+                                </f:facet>
+                                <f:facet name="input">
+                                    <p:calendar id="prazo" size="20" style="margin-left:8%" value="#{tarefas.prazo}"  pattern="dd/MM/yyyy" mask="true"  maxlength="15" locale="pt"  >
+                                        <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                                        <p:ajax event="dateSelect"  listener="#{atividadesEquipeMB.salvarEditarAtividade(tarefas)}" update="@all"/>
+                                        <p:ajax event="change"/>
+                                    </p:calendar>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="" style="width:45px;" styleClass="alinhaCentro" sortBy="#{tarefas.prioridade}">
+                            <p:cellEditor>
+                                <f:facet name="output">
+                                    <p:graphicImage value="#{atividadesEquipeMB.imagem(tarefas)}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:selectOneMenu id="prioridade" value="#{tarefas.prioridade}" style="width:100%">
+                                        <f:selectItem itemLabel="Normal" itemValue="3-normal" />
+                                        <f:selectItem itemLabel="Alta" itemValue="2-alta" />
+                                        <f:selectItem itemLabel="Urgente" itemValue="1-urgente" />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column style="width:30px" styleClass="alinhaCentro">
+                            <p:commandLink title="Concluir" action="#{tarefas.situacao}" >
+                                <img src="../../resources/img/confirmarI.png" width="31" height="31"/>
+                                <p:ajax update="@all" oncomplete="popAprovar.hide(); #{meuBean.objetos}" listener="#{atividadesEquipeMB.salvarAtividadeConcluida(rowIx)}" />
+                            </p:commandLink>
+                        </p:column>
+
+                    </p:dataTable>
+                    <br></br>
+                    <p:dialog id="dialog_addComentario" header="Comentários" widgetVar="vercomentario" resizable="false"  class="dialog" width="33%" height="60%">
+                        <br></br>
+                        <p:inputTextarea value="#{atividadesEquipeMB.comentarios.comentario}" style="width:83%">
+                        </p:inputTextarea>
+                        <p:commandLink action="#{atividadesEquipeMB.salvarComentario()}" update="@all"  oncomplete="popAprovar.hide(); #{meuBean.objetos}" title="Adicionar" style="margin-left:2%;text-decoration: none">
+                            <img src="resources/img/adicionarI.png" width="30" height="30"/>
+                        </p:commandLink>
+                        <br></br> <br></br>
+                        <p:carousel value="#{atividadesEquipeMB.listaComentarios}" var="comentarios" itemStyleClass="carousel" style="width:30%;" numVisible="1" firstVisible="0">
+                            <br></br>  
+                            <h:outputText value="#{comentarios.data}" style="width: 15%" >
+                                <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                            </h:outputText>
+                            <h:outputText value="#{comentarios.hora}" style="width: 15%;margin-left: 2%"/>
+                            <h:outputText value="#{comentarios.usuario.nome}" style="margin-left:37%;text-align: right"/>
+                            <br></br> <br></br>
+                            <h:outputText value="Comentário:" style="width:100%" />
+                            <h:outputText value="#{comentarios.comentario}" style="margin-left: 2%"/>
+                        </p:carousel>
+                        <br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br><br></br>
+                    </p:dialog>
+                    
+                </div>
+
+            </h:form>     
+
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,19 @@
+@import url(https://fonts.googleapis.com/css?family=Pacifico);
+@import url(https://fonts.googleapis.com/css?family=Poiret+One);
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+input[type="text"]{
+    background-color: transparent;
+    border:4px;
+    color:#fff;
+}
+
+input[type="password"]{
+    background-color: transparent;
+    border:4px;
+    color:#fff;
+}

@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/pages/templates/default.xhtml">
+        <ui:define name="corpo">
+             <h:form id="consTela">
+                <div id="centro2" ><br></br>
+                    <p:growl id="growl2" showDetail="true" sticky="true" /><br></br>
+                    <legend class="titulo" style="font-size: 30px;margin-left: 45%">Consulta de Projetos</legend>
+                    
+                    <p:commandLink  title="Adicionar Projeto" styleClass="cadastro5" action="#{projetoMB.novo()}" >
+                     <img src="../../resources/img/adicionarI.png" style="margin-left:71%"/>
+                     <p:ajax event="dialogReturn" listener="#{projetoMB.retornoDialogNovo}" process="@this" update=":consTela:tabelaProjeto" />
+                     </p:commandLink>  
+                    
+                    <p:contextMenu for="tabelaProjeto" style="font-size: 12px">
+                        <p:menuitem value="Alterar"  icon=" ui-icon-pencil"  action="#{projetoMB.editar()}" />
+                        <p:menuitem value="Vincular Membros"  icon="ui-icon-shuffle" action="#{projetoMB.vincularMembros(projetoMB.projeto)}"  />
+                    </p:contextMenu>
+                      <p:dataTable id="tabelaProjeto" var="consProjeto" value="#{projetoMB.listaProjeto}" class="dataGridcadastro" 
+                                   scrollable="true" scrollHeight="350" selection="#{projetoMB.projeto}" selectionMode="single" rowKey="#{consProjeto.idprojeto}" >
+                       
+                          <p:column headerText="Nome"  styleClass="border">
+                            <h:outputText value="#{consProjeto.nome}" />
+                        </p:column>
+
+                        <p:column headerText="Cliente" styleClass="border">
+                            <h:outputText value="#{consProjeto.cliente.nomefantasia}" />
+                        </p:column>
+                          
+                          <p:column style="width:45px" headerText="Situação" styleClass="alinhaCentro">
+                            <p:commandLink id="desabilitar" title="Ativo/Inativo"  update="tabelaProjeto" >
+                                <img src="#{projetoMB.retornarImagemSituacao(consProjeto)}"/>
+                            </p:commandLink>
+                        </p:column>
+                        <p:column style="width:40px;text-align: center;" styleClass="border">
+                            <p:commandLink  title="Módulos" action="#{projetoMB.modulo(consProjeto)}" >
+                                <img src="../../resources/img/modulos.png"/>
+                            </p:commandLink>
+                        </p:column>
+                        <p:column style="width:40px;text-align: center;" styleClass="border">
+                            <p:commandLink ajax="false" actionListener="#{projetoMB.relatorio(consProjeto)}" title="Imprimir" action="#{relatorioProjetoMB.gerarRelatorio()}" >
+                                <img src="../../resources/img/imprimirI.png" width="87%" height="87%"/>
+                            </p:commandLink>
+                        </p:column>
+                    </p:dataTable>
+                    <br></br>
+                    
+                    <br></br><br></br>
+                   
+                </div>
+                
+            </h:form>     
+
+        </ui:define>
+    </ui:composition>
+</html>

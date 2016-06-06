@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/pages/templates/default.xhtml">
+        <ui:define name="corpo">
+            <h:form style="font-size: 12px;">
+                <div id="centro2" ><br></br><br></br><br></br>
+                      <legend class="subtitulo">Cadastro de Usuário</legend>
+                      <br></br> <br></br>
+                      <p:outputLabel value="Nome:" for="nome" style="margin-left: 7%"/>
+                      <p:inputText id="nome" style="width:32%" class="espaco2" value="#{cadUsuarioMB.usuario.nome}"/>
+                      <p:outputLabel value="Cargo:" for="cargo" style="margin-left: 11.5%"/>
+                      <p:inputText id="cargo" value="#{cadUsuarioMB.usuario.cargo}"  style="width:15%" class="espaco2"/>
+                      <br></br> <br></br> <br></br> 
+
+                      <p:outputLabel value="Email:" for="email" style="margin-left: 7%"/>
+                      <p:inputText id="email"  style="width:32%" class="espaco2" value="#{cadUsuarioMB.usuario.email}"/>
+                      <p:outputLabel value="Telefone:" for="telefone" style="margin-left: 10.5%"/>
+                      <p:inputMask id="telefone" style="width:15%" class="espaco2" mask="(99)9999-9999" value="#{cadUsuarioMB.usuario.telefone}"/>
+                       <br></br> <br></br> <br></br> 
+
+                       <p:outputLabel value="Login:" for="login" style="margin-left: 7%"/>
+                       <p:inputText id="login"  style="width:32%" class="espaco2" value="#{cadUsuarioMB.usuario.login}"/>
+                       <p:outputLabel value="Data de Nascimento:" for="dataNasc" style="margin-left: 9%"/>
+                       <p:calendar id="dataNasc"  pattern="dd/MM/yyyy" mask="true" size="19" class="espaco2" value="#{cadUsuarioMB.usuario.datanascimento}" >
+                           <f:convertDateTime   pattern="dd/MM/yyyy" timeZone="America/Sao_Paulo"/>
+                       </p:calendar>
+                       <br></br> <br></br> <br></br>   
+                       <p:outputLabel value="Departamento:" style="margin-left: 7%" class="espaco1"/> 
+                       <p:selectOneMenu id="iddepartamento" value="#{cadUsuarioMB.departamento}" style="width:15%;" class="espaco2" 
+                                             converter="departamentoConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                                <f:selectItem itemLabel="Selecione" itemValue="0" noSelectionOption="true"/> 
+                                <f:selectItems id="iddepartamentoescolhido" value="#{cadUsuarioMB.listaDepartamento}" var="cdepartamento" itemLabel="#{cdepartamento.nome}" itemValue="#{cdepartamento}"/>
+                                <f:attribute name="listaDepartamento" value="#{cadUsuarioMB.listaDepartamento}"/>
+                                <p:ajax event="change" update="subdepartamento"/> 
+                            </p:selectOneMenu>
+                       <p:outputLabel value="Subdepartamento:" for="subdepartamento" class="espaco1"/>
+                       <p:selectOneMenu id="subdepartamento" value="#{cadUsuarioMB.usuario.subdepartamento}" class="espaco2" style="width:12%"
+                                         converter="subDepartamentoConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                           <f:selectItem itemLabel="Selecione" itemValue="0"  noSelectionOption="true" />
+                           <f:selectItems value="#{cadUsuarioMB.departamento.subdepartamentoList}" var="subdepartamentoSelecionado" itemLabel="#{subdepartamentoSelecionado.nome}" itemValue="#{subdepartamentoSelecionado}"/>
+                           <f:attribute name="listaSubDepartamento" value="#{cadUsuarioMB.departamento.subdepartamentoList}"/>
+                       </p:selectOneMenu>
+                       <p:outputLabel value="Tipo de Acesso:" for="tipoacesso" class="espaco2"/>
+                       <p:selectOneMenu id="tipoacesso" value="#{cadUsuarioMB.usuario.perfil}" class="espaco2" style="width:12%"
+                                         converter="perfilConverter" filter="true" filterMatchMode="startsWith" panelStyle="width:180px" >
+                           <f:selectItem itemLabel="Selecione" itemValue="0"   />
+                           <f:selectItems value="#{cadUsuarioMB.listaPerfil}" var="perfilSelecionado" itemLabel="#{perfilSelecionado.tipoacesso}" itemValue="#{perfilSelecionado}"/>
+                           <f:attribute name="listaPerfil" value="#{cadUsuarioMB.listaPerfil}"/>
+                       </p:selectOneMenu>
+                          
+                    <br></br><br></br><br></br>
+                     
+                    <p:commandLink title="Confirmar" class="cadastro6" action="#{cadUsuarioMB.salvar()}" style="margin-left: 69%;text-decoration: none">
+                        <img src="../../resources/img/confirmarI.png"/>
+                    </p:commandLink>  
+                    <p:commandLink title="Cancelar" class="cancelar" action="#{cadUsuarioMB.cancelar()}" style="margin-left: 2%;text-decoration: none">
+                        <img src="../../resources/img/cancelarI.png"/>
+                    </p:commandLink>  
+                    <br></br><br></br>
+                </div>
+                
+            </h:form>     
+
+        </ui:define>
+    </ui:composition>
+</html>

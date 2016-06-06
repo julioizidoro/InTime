@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+        <link href="../../resources/css/cssteste.css" rel="stylesheet" type="text/css" />
+    </h:head>
+
+    <h:body class="body2">
+        <h:form id="vincularMembros" class="body2" style="font-size: 12px">
+            <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+
+            <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <img src="../../resources/img/ajax-loader.gif" />
+            </p:dialog>
+            <p:growl id="growl" showDetail="true" sticky="true" />
+            <title>Vincular Membros</title> 
+           
+            <p:selectOneMenu  id="departamento" value="#{membrosMB.idUsuario}" style="width:224px;margin-left: 1.5%">
+                <f:selectItem  itemLabel="selecione" itemValue="sn"   />
+                <f:selectItems value="#{membrosMB.listaUsuario}" var="listaUsuarios" itemLabel="#{listaUsuarios.nome}" itemValue="#{listaUsuarios.idusuario}"/>
+            </p:selectOneMenu>
+            <p:commandLink title="Adicionar" action="#{membrosMB.adicionarMembro(membrosMB.membros.projeto)}" update="@all" oncomplete="popAprovar.hide(); #{meuBean.objetos}" style="margin-left: 53%;text-decoration: none">
+                <img src="../../resources/img/adicionarI.png"/>
+            </p:commandLink>
+            <br></br><br></br><br></br>
+            <p:dataTable id="tabelaListaMembros" var="listaMembros" value="#{membrosMB.listaMembros}" style="width: 100%" editable="true" editMode="cell" rowStyleClass="#{empty rowIx or rowIx mod 2 ne 0 ? 'even-row' : 'odd-row'}"
+                         scrollable="true" scrollHeight="200" rowIndexVar="linha">
+                
+                <p:column headerText="Nome"  styleClass="border">
+                    <h:outputText value="#{listaMembros.usuario.nome}" />
+                </p:column>
+                <p:column headerText="Cargo"  styleClass="border">
+                    <h:outputText value="#{listaMembros.usuario.cargo}" />
+                </p:column>
+                <p:column headerText="Email"  styleClass="border">
+                    <h:outputText value="#{listaMembros.usuario.email}" />
+                </p:column>
+                <p:column style="width:30px"  styleClass="border">
+                    <p:commandLink title="Excluir" action="#{membrosMB.excluir(listaMembros)}" update="@all" oncomplete="popAprovar.hide(); #{meuBean.objetos}">
+                        <img src="../../resources/img/excluirI.png" width="25" height="25"/>
+                    </p:commandLink>
+                </p:column>
+            </p:dataTable>
+            
+            <br/>
+            <p:commandLink style="height:6%;margin-left:83%;text-decoration: none"  class="botaoDialog" action="#{membrosMB.salvar()}" update="@all" ajax="true" title="Confirmar">
+                <img src="../../resources/img/confirmarI.png"/>
+            </p:commandLink>
+            <p:commandLink style="height:6%;text-decoration: none"   class="espaco2" action="#{membrosMB.salvar()}" update="@all" ajax="true" title="Cancelar">
+                <img src="../../resources/img/cancelarI.png"/>
+            </p:commandLink>
+
+            <br/><br/>
+        </h:form>
+    </h:body>
+
+</html>
